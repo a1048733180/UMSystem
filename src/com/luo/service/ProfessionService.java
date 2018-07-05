@@ -21,6 +21,6 @@ public interface ProfessionService {
 	void alertProfession(Profession profession);
 	
 	// 返回专业列表
-	String getProfessionList(Profession profession);
+	String getProfessionList(String course);
 	
 }

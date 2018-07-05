@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import com.luo.base.list.SeqList;
-import com.luo.base.list.SortedSinglyList;
+import com.luo.base.list.SortedCirDoublyList;
 import com.luo.dao.StudentDao;
 import com.luo.entity.Profession;
 import com.luo.entity.Student;
@@ -25,7 +25,7 @@ public class StudentDaoImpl implements StudentDao {
 	private Student student;
 
 	// 创建一个排序学生表，按照学号排序
-	public SortedSinglyList<Student> studentList = new SortedSinglyList<>();
+	public SortedCirDoublyList<Student> studentList = new SortedCirDoublyList<>();
 
 	// 存放一个链表转化的数组
 	public SeqList<Student> studentSeqList;
@@ -70,42 +70,18 @@ public class StudentDaoImpl implements StudentDao {
 	@Override
 	public void insertStudent(Student student) {
 		// 增加学生
-		try {
-			studentList.insert(student);
-			// 建立输出流
-			BufferedWriter out = new BufferedWriter(new FileWriter(file, true));
-			String str = "";
-			str += student.getProfessionId() + "-" + student.getProfession();
-			out.write(student.getId() + "/" + student.getName() + "/" + student.getSex() + "/" + student.getAge() + "/"
-					+ str + "/" + student.getIntroduce());
-			out.newLine();
-			out.flush();
-			out.close();
-		} catch (IOException e) {
-			System.out.println("插入错误:" + e);
-		}
+
+		studentList.insert(student);
+
+		writerContent(file, "添加学生");
 	}
 
 	@Override
 	public void deleteStudent(int id) {
 		// 从集合中删除特定Id的学生
 		studentList.delete(new Student(id));
-		// 更新到文件中
-		try {
-			BufferedWriter out = new BufferedWriter(new FileWriter(file));
-			for (int i = 0; i < studentList.getCount(); i++) {
-				Student stuTemp = studentList.get(i);
-				String str = "";
-				str += student.getProfessionId() + "-" + student.getProfession();
-				out.write(stuTemp.getId() + "/" + stuTemp.getName() + "/" + stuTemp.getSex() + "/" + stuTemp.getAge()
-						+ "/" + str + "/" + stuTemp.getIntroduce());
-				out.newLine();
-			}
-			out.flush();
-			out.close();
-		} catch (IOException e) {
-			System.out.println("刪除失败" + e);
-		}
+		
+		writerContent(file, "删除学生");
 
 	}
 
@@ -130,25 +106,12 @@ public class StudentDaoImpl implements StudentDao {
 		stu.setProfessionId(student.getProfessionId());
 		stu.setIntroduce(student.getIntroduce());
 
-		try {
-			BufferedWriter out = new BufferedWriter(new FileWriter(file));
-			for (int i = 0; i < studentList.getCount(); i++) {
-				Student stuTemp = studentList.get(i);
-				String str = "";
-				str += stuTemp.getProfessionId() + "-" + stuTemp.getProfession();
-				out.write(stuTemp.getId() + "/" + stuTemp.getName() + "/" + stuTemp.getSex() + "/" + stuTemp.getAge()
-						+ "/" + str + "/" + stuTemp.getIntroduce());
-				out.newLine();
-			}
-			out.flush();
-			out.close();
-		} catch (IOException e) {
-			System.out.println("修改错误" + e);
-		}
+		writerContent(file, "修改学生");
+
 	}
 
 	@Override
-	public SortedSinglyList<Student> getStudentList() {
+	public SortedCirDoublyList<Student> getStudentList() {
 		// 获取全部学生列表
 		return this.studentList;
 	}
@@ -165,4 +128,22 @@ public class StudentDaoImpl implements StudentDao {
 		return this.studentSeqList;
 	}
 
+	// 把学生排序表更新到本地
+	public void writerContent(File file, String message) {
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter(file));
+			for (int i = 0; i < studentList.size(); i++) {
+				Student stuTemp = studentList.get(i);
+				String str = "";
+				str += stuTemp.getProfessionId() + "-" + stuTemp.getProfession();
+				out.write(stuTemp.getId() + "/" + stuTemp.getName() + "/" + stuTemp.getSex() + "/" + stuTemp.getAge()
+						+ "/" + str + "/" + stuTemp.getIntroduce());
+				out.newLine();
+			}
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			System.out.println("更新本地发生错误：" + message);
+		}
+	}
 }

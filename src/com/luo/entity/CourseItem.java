@@ -17,7 +17,7 @@ public class CourseItem implements Comparable<CourseItem> {
 
 	private Course course; // 课程
 
-	private int coueseId; // 课程id
+	private int courseId; // 课程id
 
 	public Profession getProfession() {
 		return profession;
@@ -59,12 +59,12 @@ public class CourseItem implements Comparable<CourseItem> {
 		this.course = course;
 	}
 
-	public int getCoueseId() {
-		return coueseId;
+	public int getCourseId() {
+		return courseId;
 	}
 
-	public void setCoueseId(int coueseId) {
-		this.coueseId = coueseId;
+	public void setCourseId(int coueseId) {
+		this.courseId = coueseId;
 	}
 
 	@Override
@@ -72,4 +72,29 @@ public class CourseItem implements Comparable<CourseItem> {
 		return (this.professionId < courseItem.professionId ? -1
 				: (this.professionId == courseItem.professionId) ? 0 : 1);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + teacherId;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CourseItem other = (CourseItem) obj;
+		if (teacherId != other.teacherId)
+			return false;
+		return true;
+	}
+
+	
+	
 }

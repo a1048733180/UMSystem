@@ -4,12 +4,11 @@ import java.util.Iterator;
 
 /**
  * @param <T>
- * @Description 排序链表
+ * @Description 排序循环双链表
  */
 public class SortedSinglyList<T extends Comparable<? super T>> extends SinglyList<T> {
 
 	private int count;
-	private int current;
 
 	private SeqList<T> seqList;
 

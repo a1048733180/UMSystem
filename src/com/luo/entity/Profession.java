@@ -1,5 +1,7 @@
 package com.luo.entity;
 
+import java.util.List;
+
 import com.luo.base.list.SeqList;
 
 /**
@@ -13,7 +15,7 @@ public class Profession implements Comparable<Profession>{
 
 	private String name; // 专业名字
 
-	private SeqList<Course> couseList; // 专业要上的课程
+	private List<Course> courseList; // 专业要上的课程
 
 	public int getId() {
 		return id;
@@ -31,12 +33,12 @@ public class Profession implements Comparable<Profession>{
 		this.name = name;
 	}
 
-	public SeqList<Course> getCouseList() {
-		return couseList;
+	public List<Course> getCourseList() {
+		return courseList;
 	}
 
-	public void setCouseList(SeqList<Course> couseList) {
-		this.couseList = couseList;
+	public void setCourseList(List<Course> courseList) {
+		this.courseList = courseList;
 	}
 
 	@Override

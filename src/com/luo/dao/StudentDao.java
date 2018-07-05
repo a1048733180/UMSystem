@@ -1,7 +1,7 @@
 package com.luo.dao;
 
 import com.luo.base.list.SeqList;
-import com.luo.base.list.SortedSinglyList;
+import com.luo.base.list.SortedCirDoublyList;
 import com.luo.entity.Student;
 
 /**
@@ -27,7 +27,7 @@ public interface StudentDao {
 	void alertStudent(Student student);
 
 	// 获取学生列表
-	SortedSinglyList<Student> getStudentList();
+	SortedCirDoublyList<Student> getStudentList();
 
 	// 获取学生列表数组
 	SeqList<Student> getStudentSeqList();

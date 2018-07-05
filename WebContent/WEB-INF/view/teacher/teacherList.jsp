@@ -32,22 +32,21 @@
 	        remoteSort: false,
 	        columns: [[  
 				{field:'chk',checkbox: true,width:50},
- 		        {field:'id',title:'ID',width:50, sortable: true},    
- 		        {field:'number',title:'工号',width:150, sortable: true},    
+ 		        {field:'id',title:'ID',width:50, sortable: true},      
  		        {field:'name',title:'姓名',width:150},
  		        {field:'sex',title:'性别',width:100},
- 		        {field:'phone',title:'电话',width:150},
- 		        {field:'qq',title:'QQ',width:150},
- 		        {field:'courseList',title:'课程',width:500, 
+ 		        {field:'entryYear',title:'入职年份',width:150},
+ 		        {field:'jobTitle',title:'职称',width:150},
+ 		        {field:'courseList',title:'课程',width:800, 
  		        	formatter: function(value,row,index){
  						if (row.courseList){
  							var courseList = row.courseList;
  							var course = "";
  							for(var i = 0;i < courseList.length;i++){
- 								var gradeName = courseList[i].grade.name;
- 								var clazzName = courseList[i].clazz.name;
+ 								var professionName = courseList[i].profession.name;
+ 								//var clazzName = courseList[i].clazz.name;
  								var courseName = courseList[i].course.name;
- 								course += "[" + gradeName + " " + clazzName + " " + courseName + "] &nbsp;&nbsp;&nbsp;";
+ 								course += "[" + professionName + " " + courseName + "] &nbsp;&nbsp;&nbsp;";
  							}
  							return course;
  						} else {
@@ -93,16 +92,12 @@
             	$(selectRows).each(function(i, row){
             		ids[i] = row.id;
             	});
-            	var numbers = [];
-            	$(selectRows).each(function(i, row){
-            		numbers[i] = row.number;
-            	});
             	$.messager.confirm("消息提醒", "将删除与教师相关的所有数据，确认继续？", function(r){
             		if(r){
             			$.ajax({
 							type: "post",
 							url: "TeacherServlet?method=DeleteTeacher",
-							data: {ids: ids,numbers:numbers},
+							data: {ids: ids},
 							success: function(msg){
 								if(msg == "success"){
 									$.messager.alert("消息提醒","删除成功!","info");
@@ -153,18 +148,18 @@
 						} else{
 							var chooseCourse = [];
 							$(table).find(".chooseTr").each(function(){
-								var gradeid = $(this).find("input[textboxname='gradeid']").attr("gradeId");
-								var clazzid = $(this).find("input[textboxname='clazzid']").attr("clazzId");
+								var professionid = $(this).find("input[textboxname='professionid']").attr("professionId");
+								//var clazzid = $(this).find("input[textboxname='clazzid']").attr("clazzId");
 								var courseid = $(this).find("input[textboxname='courseid']").attr("courseId");
-								var course = gradeid+"_"+clazzid+"_"+courseid;
+								var course = professionid+"_"+courseid;
 								chooseCourse.push(course);
 							});
-							var number = $("#add_number").textbox("getText");
+							var id = $("#add_id").textbox("getText");
 							var name = $("#add_name").textbox("getText");
 							var sex = $("#add_sex").textbox("getText");
-							var phone = $("#add_phone").textbox("getText");
-							var qq = $("#add_qq").textbox("getText");
-							var data = {number:number, name:name,sex:sex,phone:phone,qq:qq,course:chooseCourse};
+							var entryYear = $("#add_entryYear").textbox("getText");
+							var jobTitle = $("#add_jobTitle").textbox("getText");
+							var data = {id:id, name:name,sex:sex,entryYear:entryYear,jobTitle:jobTitle,course:chooseCourse};
 							
 							$.ajax({
 								type: "post",
@@ -176,11 +171,11 @@
 										//关闭窗口
 										$("#addDialog").dialog("close");
 										//清空原表格数据
-										$("#add_number").textbox('setValue', "");
+										$("#add_id").textbox('setValue', "");
 										$("#add_name").textbox('setValue', "");
 										$("#add_sex").textbox('setValue', "男");
-										$("#add_phone").textbox('setValue', "");
-										$("#add_qq").textbox('setValue', "");
+										$("#add_entryYear").textbox('setValue', "");
+										$("#add_jobTitle").textbox('setValue', "");
 										$(table).find(".chooseTr").remove();
 										
 										//重新刷新页面数据
@@ -200,10 +195,10 @@
 					plain: true,
 					iconCls:'icon-reload',
 					handler:function(){
-						$("#add_number").textbox('setValue', "");
+						$("#add_id").textbox('setValue', "");
 						$("#add_name").textbox('setValue', "");
-						$("#add_phone").textbox('setValue', "");
-						$("#add_qq").textbox('setValue', "");
+						$("#add_entryYear").textbox('setValue', "");
+						$("#add_jobTitle").textbox('setValue', "");
 						
 						$(table).find(".chooseTr").remove();
 						
@@ -211,10 +206,10 @@
 				},
 			],
 			onClose: function(){
-				$("#add_number").textbox('setValue', "");
+				$("#add_id").textbox('setValue', "");
 				$("#add_name").textbox('setValue', "");
-				$("#add_phone").textbox('setValue', "");
-				$("#add_qq").textbox('setValue', "");
+				$("#add_entryYear").textbox('setValue', "");
+				$("#add_jobTitle").textbox('setValue', "");
 				
 				$(table).find(".chooseTr").remove();
 			}
@@ -241,17 +236,17 @@
 			    		//添加之前先判断是否已选择该课程
 						var chooseCourse = [];
 						$(table).find(".chooseTr").each(function(){
-							var gradeid = $(this).find("input[textboxname='gradeid']").attr("gradeId");
-							var clazzid = $(this).find("input[textboxname='clazzid']").attr("clazzId");
+							var professionid = $(this).find("input[textboxname='professionid']").attr("professionId");
+							//var clazzid = $(this).find("input[textboxname='clazzid']").attr("clazzId");
 							var courseid = $(this).find("input[textboxname='courseid']").attr("courseId");
-							var course = gradeid+"_"+clazzid+"_"+courseid;
+							var course = professionid+"_"+courseid;
 							chooseCourse.push(course);
 						});
 						//获取新选择的课程
-			    		var gradeId = $("#add_gradeList").combobox("getValue");
-			    		var clazzId = $("#add_clazzList").combobox("getValue");
+			    		var professionId = $("#add_professionList").combobox("getValue");
+			    		//var clazzId = $("#add_clazzList").combobox("getValue");
 			    		var courseId = $("#add_courseList").combobox("getValue");
-						var newChoose = gradeId+"_"+clazzId+"_"+courseId;
+						var newChoose = professionId+"_"+courseId;
 						for(var i = 0;i < chooseCourse.length;i++){
 							if(newChoose == chooseCourse[i]){
 								$.messager.alert("消息提醒","已选择该门课程!","info");
@@ -262,17 +257,17 @@
 						//添加到表格显示
 						var tr = $("<tr class='chooseTr'><td>课程:</td></tr>");
 						
-			    		var gradeName = $("#add_gradeList").combobox("getText");
-			    		var gradeTd = $("<td></td>");
-			    		var gradeInput = $("<input style='width: 200px; height: 30px;' data-options='readonly: true' class='easyui-textbox' name='gradeid' />").val(gradeName).attr("gradeId", gradeId);
-			    		$(gradeInput).appendTo(gradeTd);
-			    		$(gradeTd).appendTo(tr);
+			    		var professionName = $("#add_professionList").combobox("getText");
+			    		var professionTd = $("<td></td>");
+			    		var professionInput = $("<input style='width: 200px; height: 30px;' data-options='readonly: true' class='easyui-textbox' name='professionid' />").val(professionName).attr("professionId", professionId);
+			    		$(professionInput).appendTo(professionTd);
+			    		$(professionTd).appendTo(tr);
 			    		
-			    		var clazzName = $("#add_clazzList").combobox("getText");
-			    		var clazzTd = $("<td></td>");
-			    		var clazzInput = $("<input style='width: 200px; height: 30px;' data-options='readonly: true' class='easyui-textbox' name='clazzid' />").val(clazzName).attr("clazzId", clazzId);
-			    		$(clazzInput).appendTo(clazzTd);
-			    		$(clazzTd).appendTo(tr);
+			    		//var clazzName = $("#add_clazzList").combobox("getText");
+			    		//var clazzTd = $("<td></td>");
+			    		//var clazzInput = $("<input style='width: 200px; height: 30px;' data-options='readonly: true' class='easyui-textbox' name='clazzid' />").val(clazzName).attr("clazzId", clazzId);
+			    		//$(clazzInput).appendTo(clazzTd);
+			    		//$(clazzTd).appendTo(tr);
 			    		
 			    		var courseName = $("#add_courseList").combobox("getText");
 			    		var courseTd = $("<td></td>");
@@ -297,7 +292,7 @@
 	    });
 	  	
 	  //下拉框通用属性
-	  	$("#add_gradeList, #add_clazzList, #add_courseList").combobox({
+	  	$("#add_professionList, #add_courseList").combobox({
 	  		width: "200",
 	  		height: "30",
 	  		valueField: "id",
@@ -307,17 +302,17 @@
 	  		method: "post",
 	  	});
 	  	
-	  	$("#add_gradeList").combobox({
-	  		url: "GradeServlet?method=GradeList&t="+new Date().getTime(),
+	  	$("#add_professionList").combobox({
+	  		url: "ProfessionServlet?method=ProfessionList&t="+new Date().getTime(),
 	  		onChange: function(newValue, oldValue){
 	  			//加载该年级下的班级
-	  			$("#add_clazzList").combobox("clear");
-	  			$("#add_clazzList").combobox("options").queryParams = {gradeid: newValue};
-	  			$("#add_clazzList").combobox("reload");
+	  			//$("#add_clazzList").combobox("clear");
+	  			//$("#add_clazzList").combobox("options").queryParams = {gradeid: newValue};
+	  			//$("#add_clazzList").combobox("reload");
 	  			
 	  			//加载该年级下的课程
 	  			$("#add_courseList").combobox("clear");
-	  			$("#add_courseList").combobox("options").queryParams = {gradeid: newValue};
+	  			$("#add_courseList").combobox("options").queryParams = {professionid: newValue};
 	  			$("#add_courseList").combobox("reload");
 	  		},
 			onLoadSuccess: function(){
@@ -327,20 +322,21 @@
 	  		}
 	  	});
 	  	
-	  	$("#add_clazzList").combobox({
-	  		url: "ClazzServlet?method=ClazzList&t="+new Date().getTime(),
-	  		onLoadSuccess: function(){
+	  	//$("#add_clazzList").combobox({
+	  		//url: "ClazzServlet?method=ClazzList&t="+new Date().getTime(),
+	  		//onLoadSuccess: function(){
 				//默认选择第一条数据
-				var data = $(this).combobox("getData");
-				$(this).combobox("setValue", data[0].id);
-	  		}
-	  	});
+				//var data = $(this).combobox("getData");
+				//$(this).combobox("setValue", data[0].id);
+	  		//}
+	  	//});
 	  	
 	  	$("#add_courseList").combobox({
 	  		url: "CourseServlet?method=CourseList&t="+new Date().getTime(),
 	  		onLoadSuccess: function(){
 		  		//默认选择第一条数据
-				var data = $(this).combobox("getData");;
+				var data
+				= $(this).combobox("getData");;
 				$(this).combobox("setValue", data[0].id);
 	  		}
 	  	});
@@ -378,19 +374,19 @@
 						} else{
 							var chooseCourse = [];
 							$(table).find(".chooseTr").each(function(){
-								var gradeid = $(this).find("input[textboxname='gradeid']").attr("gradeId");
-								var clazzid = $(this).find("input[textboxname='clazzid']").attr("clazzId");
+								var professionid = $(this).find("input[textboxname='professionid']").attr("professionId");
+								//var clazzid = $(this).find("input[textboxname='clazzid']").attr("clazzId");
 								var courseid = $(this).find("input[textboxname='courseid']").attr("courseId");
-								var course = gradeid+"_"+clazzid+"_"+courseid;
+								var course = professionid+"_"+courseid;
 								chooseCourse.push(course);
 							});
-							var id = $("#dataList").datagrid("getSelected").id;
-							var number = $("#edit_number").textbox("getText");
+							//var id = $("#dataList").datagrid("getSelected").id;
+							var id = $("#edit_id").textbox("getText");
 							var name = $("#edit_name").textbox("getText");
 							var sex = $("#edit_sex").textbox("getText");
-							var phone = $("#edit_phone").textbox("getText");
-							var qq = $("#edit_qq").textbox("getText");
-							var data = {id:id, number:number, name:name,sex:sex,phone:phone,qq:qq,course:chooseCourse};
+							var entryYear = $("#edit_entryYear").textbox("getText");
+							var jobTitle = $("#edit_jobTitle").textbox("getText");
+							var data = {id:id, name:name,sex:sex,entryYear:entryYear,jobTitle:jobTitle,course:chooseCourse};
 							
 							$.ajax({
 								type: "post",
@@ -402,11 +398,11 @@
 										//关闭窗口
 										$("#editDialog").dialog("close");
 										//清空原表格数据
-										$("#edit_number").textbox('setValue', "");
+										$("#edit_id").textbox('setValue', "");
 										$("#edit_name").textbox('setValue', "");
 										$("#edit_sex").textbox('setValue', "男");
-										$("#edit_phone").textbox('setValue', "");
-										$("#edit_qq").textbox('setValue', "");
+										$("#edit_entryYear").textbox('setValue', "");
+										$("#edit_jobTitle").textbox('setValue', "");
 										$(table).find(".chooseTr").remove();
 										
 										//重新刷新页面数据
@@ -428,8 +424,8 @@
 					iconCls:'icon-reload',
 					handler:function(){
 						$("#edit_name").textbox('setValue', "");
-						$("#edit_phone").textbox('setValue', "");
-						$("#edit_qq").textbox('setValue', "");
+						$("#edit_enrtyYear").textbox('setValue', "");
+						$("#edit_jobTitle").textbox('setValue', "");
 						
 						$(table).find(".chooseTr").remove();
 						
@@ -439,34 +435,34 @@
 			onBeforeOpen: function(){
 				var selectRow = $("#dataList").datagrid("getSelected");
 				//设置值
-				$("#edit_number").textbox('setValue', selectRow.number);
+				$("#edit_id").textbox('setValue', selectRow.id);
 				$("#edit_name").textbox('setValue', selectRow.name);
 				$("#edit_sex").textbox('setValue', selectRow.sex);
-				$("#edit_phone").textbox('setValue', selectRow.phone);
-				$("#edit_qq").textbox('setValue', selectRow.qq);
-				$("#edit_photo").attr("src", "PhotoServlet?method=GetPhoto&type=3&number="+selectRow.number);
+				$("#edit_entryYear").textbox('setValue', selectRow.entryYear);
+				$("#edit_jobTitle").textbox('setValue', selectRow.jobTitle);
+				//$("#edit_photo").attr("src", "PhotoServlet?method=GetPhoto&type=3&number="+selectRow.number);
 				
 				var courseList = selectRow.courseList;
 				
 				for(var i = 0;i < courseList.length;i++){
-					var gradeId = courseList[i].grade.id;
-					var gradeName = courseList[i].grade.name;
-					var clazzId = courseList[i].clazz.id;
-					var clazzName = courseList[i].clazz.name;
+					var professionId = courseList[i].profession.id;
+					var professionName = courseList[i].profession.name;
+					//var clazzId = courseList[i].clazz.id;
+					//var clazzName = courseList[i].clazz.name;
 					var courseId = courseList[i].course.id;
 					var courseName = courseList[i].course.name;
 					//添加到表格显示
 					var tr = $("<tr class='chooseTr'><td>课程:</td></tr>");
 					
-		    		var gradeTd = $("<td></td>");
-		    		var gradeInput = $("<input style='width: 200px; height: 30px;' data-options='readonly: true' class='easyui-textbox' name='gradeid' />").val(gradeName).attr("gradeId", gradeId);
-		    		$(gradeInput).appendTo(gradeTd);
-		    		$(gradeTd).appendTo(tr);
+		    		var professionTd = $("<td></td>");
+		    		var professionInput = $("<input style='width: 200px; height: 30px;' data-options='readonly: true' class='easyui-textbox' name='professionid' />").val(professionName).attr("professionId", professionId);
+		    		$(professionInput).appendTo(professionTd);
+		    		$(professionTd).appendTo(tr);
 		    		
-		    		var clazzTd = $("<td></td>");
-		    		var clazzInput = $("<input style='width: 200px; height: 30px;' data-options='readonly: true' class='easyui-textbox' name='clazzid' />").val(clazzName).attr("clazzId", clazzId);
-		    		$(clazzInput).appendTo(clazzTd);
-		    		$(clazzTd).appendTo(tr);
+		    		//var clazzTd = $("<td></td>");
+		    		//var clazzInput = $("<input style='width: 200px; height: 30px;' data-options='readonly: true' class='easyui-textbox' name='clazzid' />").val(clazzName).attr("clazzId", clazzId);
+		    		//$(clazzInput).appendTo(clazzTd);
+		    		//$(clazzTd).appendTo(tr);
 		    		
 		    		var courseTd = $("<td></td>");
 		    		var courseInput = $("<input style='width: 200px; height: 30px;' data-options='readonly: true' class='easyui-textbox' name='courseid' />").val(courseName).attr("courseId", courseId);
@@ -488,8 +484,8 @@
 			},
 			onClose: function(){
 				$("#edit_name").textbox('setValue', "");
-				$("#edit_phone").textbox('setValue', "");
-				$("#edit_qq").textbox('setValue', "");
+				$("#edit_entryYear").textbox('setValue', "");
+				$("#edit_jobTitle").textbox('setValue', "");
 				
 				$(table).find(".chooseTr").remove();
 			}
@@ -519,15 +515,12 @@
 	
 	<!-- 添加窗口 -->
 	<div id="addDialog" style="padding: 10px;">  
-   		<div style=" position: absolute; margin-left: 560px; width: 250px; height: 300px; border: 1px solid #EEF4FF" id="photo">
-    		<img alt="照片" style="max-width: 250px; max-height: 300px;" title="照片" src="photo/teacher.jpg" />
-	    </div> 
    		<form id="addForm" method="post">
 	    	<table id="addTable" border=0 style="width:800px; table-layout:fixed;" cellpadding="6" >
 	    		<tr>
-	    			<td style="width:40px">学号:</td>
+	    			<td style="width:40px">ID:</td>
 	    			<td colspan="3">
-	    				<input id="add_number"  class="easyui-textbox" style="width: 200px; height: 30px;" type="text" name="number" data-options="required:true, validType:'repeat', missingMessage:'请输入工号'" />
+	    				<input id="add_id"  class="easyui-textbox" style="width: 200px; height: 30px;" type="text" name="id" data-options="required:true, validType:'repeat', missingMessage:'请输入工号'" />
 	    			</td>
 	    			<td style="width:80px"></td>
 	    		</tr>
@@ -540,12 +533,12 @@
 	    			<td colspan="4"><select id="add_sex" class="easyui-combobox" data-options="editable: false, panelHeight: 50, width: 60, height: 30" name="sex"><option value="男">男</option><option value="女">女</option></select></td>
 	    		</tr>
 	    		<tr>
-	    			<td>电话:</td>
-	    			<td colspan="4"><input id="add_phone" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="phone" validType="mobile" /></td>
+	    			<td>入职年份:</td>
+	    			<td colspan="4"><input id="add_entryYear" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="entryYear" /></td>
 	    		</tr>
 	    		<tr>
-	    			<td>QQ:</td>
-	    			<td colspan="4"><input id="add_qq" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="qq" validType="number" /></td>
+	    			<td>职称:</td>
+	    			<td colspan="4"><input id="add_jobTitle" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="jobTitle" /></td>
 	    		</tr>
 	    	</table>
 	    </form>
@@ -555,12 +548,8 @@
 	<div id="chooseCourseDialog" style="padding: 10px">
 	   	<table cellpadding="8" >
 	   		<tr>
-	   			<td>年级：</td>
-	   			<td><input id="add_gradeList" style="width: 200px; height: 30px;" class="easyui-combobox" name="gradeid" /></td>
-	   		</tr>
-	   		<tr>
-	   			<td>班级：</td>
-	   			<td><input id="add_clazzList" style="width: 200px; height: 30px;" class="easyui-combobox" name="clazzid" /></td>
+	   			<td>专业：</td>
+	   			<td><input id="add_professionList" style="width: 200px; height: 30px;" class="easyui-combobox" name="professionid" /></td>
 	   		</tr>
 	   		<tr>
 	   			<td>课程：</td>
@@ -571,14 +560,11 @@
 	
 	<!-- 修改窗口 -->
 	<div id="editDialog" style="padding: 10px">
-		<div style=" position: absolute; margin-left: 560px; width: 250px; height: 300px; border: 1px solid #EEF4FF">
-	    	<img id="edit_photo" alt="照片" style="max-width: 200px; max-height: 400px;" title="照片" src="" />
-	    </div>   
     	<form id="editForm" method="post">
 	    	<table id="editTable" border=0 style="width:800px; table-layout:fixed;" cellpadding="6" >
 	    		<tr>
-	    			<td style="width:40px">工号:</td>
-	    			<td colspan="3"><input id="edit_number" data-options="readonly: true" class="easyui-textbox" style="width: 200px; height: 30px;" type="text" name="number" data-options="required:true, validType:'repeat', missingMessage:'请输入工号'" /></td>
+	    			<td style="width:40px">ID:</td>
+	    			<td colspan="3"><input id="edit_id" data-options="readonly: true" class="easyui-textbox" style="width: 200px; height: 30px;" type="text" name="id" data-options="required:true, validType:'repeat', missingMessage:'请输入工号'" /></td>
 	    			<td style="width:80px"></td>
 	    		</tr>
 	    		<tr>
@@ -590,12 +576,12 @@
 	    			<td><select id="edit_sex" class="easyui-combobox" data-options="editable: false, panelHeight: 50, width: 60, height: 30" name="sex"><option value="男">男</option><option value="女">女</option></select></td>
 	    		</tr>
 	    		<tr>
-	    			<td>电话:</td>
-	    			<td><input id="edit_phone" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="phone" validType="mobile" /></td>
+	    			<td>入职年份:</td>
+	    			<td><input id="edit_entryYear" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="entryYear" /></td>
 	    		</tr>
 	    		<tr>
-	    			<td>QQ:</td>
-	    			<td colspan="4"><input id="edit_qq" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="qq" validType="number" /></td>
+	    			<td>职称:</td>
+	    			<td colspan="4"><input id="edit_jobTitle" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="jobTitle" /></td>
 	    		</tr>
 	    	</table>
 	    </form>

@@ -1,6 +1,6 @@
 package com.luo.dao;
 
-import com.luo.base.list.SortedSinglyList;
+import com.luo.base.list.SortedCirDoublyList;
 import com.luo.entity.Profession;
 
 /**
@@ -24,7 +24,7 @@ public interface ProfessionDao {
 	int professionCount();
 	
 	// 返回专业列表
-	SortedSinglyList<Profession> getProfessionList();
+	SortedCirDoublyList<Profession> getProfessionList();
 	
 	// 通过专业id查找专业
 	Profession findProfession(int professionId);

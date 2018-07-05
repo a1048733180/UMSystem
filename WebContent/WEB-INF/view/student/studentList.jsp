@@ -43,7 +43,7 @@
  						}
  					}
 				},
- 		        {field:'introduce',title:'简介',width:250,},
+ 		        {field:'introduce',title:'简介',width:200,},
 	 		]], 
 	        toolbar: "#toolbar"
 	    }); 
@@ -126,7 +126,7 @@
 	  	//下拉框通用属性
 	  	$("#add_professionList, #edit_professionList").combobox({
 	  		width: "200",
-	  		height: "30",
+	  		height: "20",
 	  		valueField: "id",
 	  		textField: "name",
 	  		multiple: false, //可多选
@@ -193,7 +193,7 @@
 										$("#add_name").textbox('setValue', "");
 										$("#add_sex").textbox('setValue', "男");
 										$("#add_age").textbox('setValue', "");
-										$("#add_qq").textbox('setValue', "");
+										$("#add_introduce").textbox('setValue', "");
 										
 										//重新刷新页面数据
 										//$('#dataList').datagrid("options").queryParams = {clazzid: clazzid};
@@ -297,7 +297,6 @@
 				$("#edit_name").textbox('setValue', selectRow.name);
 				$("#edit_sex").textbox('setValue', selectRow.sex);
 				$("#edit_age").textbox('setValue', selectRow.age);
-				$("#edit_photo").attr("src", "PhotoServlet?method=GetPhoto&type=2&id="+selectRow.id);
 				var professionid = selectRow.professionId;
 				$("#edit_professionList").combobox('setValue', professionid);
 				$("#edit_introduce").textbox('setValue', selectRow.introduce);
@@ -327,9 +326,6 @@
 	
 	<!-- 添加学生窗口 -->
 	<div id="addDialog" style="padding: 10px">  
-		<div style="float: right; margin: 20px 20px 0 0; width: 200px; border: 1px solid #EBF3FF" id="photo">
-	    	<img alt="照片" style="max-width: 200px; max-height: 400px;" title="照片" src="photo/student.jpg" />
-	    </div> 
     	<form id="addForm" method="post">
 	    	<table cellpadding="8" >
 	    		<tr>
@@ -363,10 +359,7 @@
 	</div>
 	
 	<!-- 修改学生窗口 -->
-	<div id="editDialog" style="padding: 10px">
-		<div style="float: right; margin: 20px 20px 0 0; width: 200px; border: 1px solid #EBF3FF">
-	    	<img id="edit_photo" alt="照片" style="max-width: 200px; max-height: 400px;" title="照片" src="" />
-	    </div>   
+	<div id="editDialog" style="padding: 10px"> 
     	<form id="editForm" method="post">
 	    	<table cellpadding="8" >
 	    		<tr>

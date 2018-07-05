@@ -1,5 +1,8 @@
  package com.luo.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.luo.base.list.SeqList;
 
 /**
@@ -21,7 +24,7 @@ public class Teacher implements Comparable<Teacher>{
 
 	private String[] courses = new String[] {}; // 课程集合
 
-	private SeqList<CourseItem> courseList = new SeqList<>(); // 课表和哪里上课
+	private List<CourseItem> courseList = new ArrayList<>(); // 课表和哪里上课
 
 	public int getId() {
 		return id;
@@ -71,11 +74,11 @@ public class Teacher implements Comparable<Teacher>{
 		this.courses = courses;
 	}
 
-	public SeqList<CourseItem> getCourseList() {
+	public List<CourseItem> getCourseList() {
 		return courseList;
 	}
 
-	public void setCourseList(SeqList<CourseItem> courseList) {
+	public void setCourseList(List<CourseItem> courseList) {
 		this.courseList = courseList;
 	}
 	

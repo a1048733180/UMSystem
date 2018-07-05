@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.luo.base.list.SortedSinglyList;
+import com.luo.base.list.SortedCirDoublyList;
 import com.luo.dao.ProfessionDao;
 import com.luo.entity.Profession;
 
@@ -20,7 +20,7 @@ import com.luo.entity.Profession;
  */
 public class ProfessionDaoImpl implements ProfessionDao {
 
-	public SortedSinglyList<Profession> professionList = new SortedSinglyList<>();
+	public SortedCirDoublyList<Profession> professionList = new SortedCirDoublyList<>();
 
 	static File file = new File("F:\\JAVA项目\\UMSystem\\文件表\\专业表.txt");
 
@@ -29,7 +29,7 @@ public class ProfessionDaoImpl implements ProfessionDao {
 	}
 
 	@Override
-	public SortedSinglyList<Profession> getProfessionList() {
+	public SortedCirDoublyList<Profession> getProfessionList() {
 		return this.professionList;
 	}
 
@@ -65,6 +65,8 @@ public class ProfessionDaoImpl implements ProfessionDao {
 			out.close();
 		} catch (IOException e) {
 			System.out.println("添加专业失败" + e);
+		}finally{
+			writerContent(file, "添加后更新到本地出现错误");
 		}
 	}
 
@@ -91,7 +93,7 @@ public class ProfessionDaoImpl implements ProfessionDao {
 	public void writerContent(File file, String message) {
 		try {
 			BufferedWriter out = new BufferedWriter(new FileWriter(file));
-			for (int i = 0; i < professionList.getCount(); i++) {
+			for (int i = 0; i < professionList.size(); i++) {
 				Profession professionTemp = professionList.get(i);
 				out.write(professionTemp.getId() + "/" + professionTemp.getName());
 				out.newLine();
@@ -106,7 +108,7 @@ public class ProfessionDaoImpl implements ProfessionDao {
 	@Override
 	public int professionCount() {
 		// 记录总的专业数量
-		return this.professionList.getCount();
+		return this.professionList.size();
 	}
 
 	@Override

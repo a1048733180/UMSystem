@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.luo.base.list.SeqList;
-import com.luo.base.list.SortedSinglyList;
 import com.luo.dao.ProfessionDao;
 import com.luo.dao.StudentDao;
 import com.luo.dao.impl.ProfessionDaoImpl;
@@ -68,8 +67,7 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	// 分页获取学生列表
 	public String getStudentListByPage(Student student, Page page) {
-		// 获取全部学生
-		SortedSinglyList<Student> studentList = stuDao.getStudentList();
+		
 		// 存放分页后的学生信息(默认的数组大小是64)
 		List<Student> stuTemp = new ArrayList<Student>();
 

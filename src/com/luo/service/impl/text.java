@@ -1,17 +1,11 @@
 package com.luo.service.impl;
 
-import com.luo.entity.Page;
-import com.luo.entity.Student;
-import com.luo.service.StudentService;
+import com.luo.service.ProfessionService;
 
 public class text {
 	public static void main(String[] args) {
-		StudentService studentService = new StudentServiceImpl();
-		Student stu = new Student();
-		stu.setProfessionId(3);
-		Page page = new Page(1, 10);
-
-		String result = studentService.getStudentListByPage(stu, page);
-		System.out.println(result);
+		ProfessionService p = new ProfessionServiceImpl();
+		String course = "course";
+		System.out.println(p.getProfessionList(course));
 	}
 }

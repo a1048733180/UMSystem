@@ -98,6 +98,22 @@ public class SinglyList<T> {
 		return null;
 	}
 
+	// 散列表用 .删除首个与key相等元素结点，返回被删除元素；查找不成功返回null。
+	public T remove(T key) {
+		Node<T> front = this.head, p = front.next;
+		while (p != null && !key.equals(p.data)) // 顺序查找首次出现的与key相等元素
+		{
+			front = p; // front指向p的前驱结点
+			p = p.next;
+		}
+		if (p != null) // 若查找成功，删除front的后继（p结点）
+		{
+			front.next = p.next; // 包括头删除、中间/尾删除
+			return p.data;
+		}
+		return null;
+	}
+
 	public void clean() {
 		head.next = null;
 	}
@@ -140,5 +156,46 @@ public class SinglyList<T> {
 			p = p.next;
 		}
 		return null;
+	}
+
+	// 散列表中用到，用于出现的元素，并放进链表中返回，查找不到返回null
+	public SeqList<T> search(T key) {
+		// 默认大小为64，在这里应该够用
+		SeqList<T> tList =new SeqList<T>();
+		for (Node<T> p = this.head.next; p != null; p = p.next)
+			if (key.equals(p.data)) // 执行T类的equals(Object)方法，运行时多态
+				tList.insert(p.data);
+		return tList;
+	}
+
+	// 散列表中用到，用于尾插入互异元素x，若查找到与x的关键字相同元素，不插入，返回x结点
+	public Node<T> insertDifferent(T x) {
+		Node<T> front = this.head, p = front.next; // front是p的前驱结点
+		while (p != null && !p.data.equals(x)) // 顺序查找
+		{
+			front = p;
+			p = p.next;
+		}
+		if (p != null) // 查找成功，元素重复，不插入，返回p结点
+		{
+			System.out.println("x=" + x + "，元素重复，未插入。");
+			return p;
+		}
+		return front.next = new Node<T>(x, null); // 尾插入值为x结点，返回插入结点
+	}
+
+	// 散列表中用到，用于可以插入相同元素x，若查找到与x的关键字相同元素，则插入在该元素之前
+	public Node<T> insertSame(T x) {
+		Node<T> front = this.head, p = front.next; // front是p的前驱结点
+		while (p != null && !p.data.equals(x)) // 顺序查找
+		{
+			front = p;
+			p = p.next;
+		}
+		if (p != null) // 查找成功，元素重复，则在该元素前插入
+		{
+			return front.next = new Node<T>(x, p);
+		}
+		return front.next = new Node<T>(x, null); // 尾插入值为x结点，返回插入结点
 	}
 }

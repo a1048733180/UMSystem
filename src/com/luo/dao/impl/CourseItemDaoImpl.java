@@ -7,12 +7,16 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.luo.base.hash.HashSet;
 import com.luo.base.list.LinkedMatrix;
 import com.luo.base.list.Node;
 import com.luo.base.list.SeqList;
 import com.luo.base.list.SortedSinglyList;
 import com.luo.base.list.Triple;
+import com.luo.dao.CourseDao;
 import com.luo.dao.CourseItemDao;
 import com.luo.entity.Course;
 import com.luo.entity.CourseItem;
@@ -31,7 +35,11 @@ public class CourseItemDaoImpl implements CourseItemDao {
 	// 矩阵行代表专业，列代表课程，只有专业和课程才能表示教师
 	public LinkedMatrix courseItemLinkedMatrix;
 
+	// 建立一个以教师id为索引的哈希表
+	HashSet<CourseItem> teacherSet;
+
 	public CourseItemDaoImpl() {
+		readContent(file);
 	}
 
 	static File file = new File("F:\\JAVA项目\\UMSystem\\文件表\\教师课程表.txt");
@@ -41,12 +49,14 @@ public class CourseItemDaoImpl implements CourseItemDao {
 		String thisLine;
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
-			CourseItem courseItem = new CourseItem();
+			CourseItem courseItem;
 
 			// 创建一个以专业数量为行数、课程数量（不包括选修课）为列数的矩阵
-			courseItemLinkedMatrix = new LinkedMatrix(new ProfessionDaoImpl().professionCount(),
-					new CourseDaoImpl().countCourse());
+			courseItemLinkedMatrix = new LinkedMatrix(50, 50);
+
+			teacherSet = new HashSet<CourseItem>();
 			while ((thisLine = in.readLine()) != null) {
+				courseItem = new CourseItem();
 				String[] str = thisLine.split("/");
 
 				// 存放专业
@@ -67,7 +77,7 @@ public class CourseItemDaoImpl implements CourseItemDao {
 				course.setName(courseStr[1]);
 				// CourseItem中的对应属性赋值
 				courseItem.setCourse(course);
-				courseItem.setCoueseId(course.getId());
+				courseItem.setCourseId(course.getId());
 
 				// 存放教师
 				String[] teacherStr = str[2].split("-");
@@ -79,10 +89,14 @@ public class CourseItemDaoImpl implements CourseItemDao {
 				courseItem.setTeacher(teacher);
 				courseItem.setTeacherId(teacher.getId());
 				// 把专业id当成行号、课程id当成列号、教师Id当作值存储在三元组里
-				Triple tri = new Triple(courseItem.getProfessionId(), courseItem.getCoueseId(),
+				Triple tri = new Triple(courseItem.getProfessionId(), courseItem.getCourseId(),
 						courseItem.getTeacherId());
 
+				// 添加进三元稀疏矩阵
 				courseItemLinkedMatrix.set(tri);
+
+				// 添加到哈希表中
+				teacherSet.add(courseItem);
 			}
 			in.close();
 		} catch (IOException e) {
@@ -91,7 +105,7 @@ public class CourseItemDaoImpl implements CourseItemDao {
 	}
 
 	@Override
-	public void insertCourse(Course course, Teacher teacher, Profession[] profession) {
+	public void insertCourseItemByCourse(Course course, Teacher teacher, Profession[] profession) {
 		// 新增课程类
 		// 要写入稀疏三元数组链表中，也要写入本地文件中
 		// 判断新增课程是专业必修课还是必修课
@@ -109,16 +123,45 @@ public class CourseItemDaoImpl implements CourseItemDao {
 			}
 		}
 
-		String errorMessage = "新增课表失败";
+		String errorMessage = "新增专业-课表失败";
 		writerContent(file, errorMessage);
 
 	}
 
 	@Override
-	public void alertCourseItem(CourseItem course) {
-		// 修改专业
-		Triple tri = new Triple(course.getProfessionId(), course.getCoueseId(), course.getTeacherId());
+	public void insertCourseItemByTeacher(Course course, Teacher teacher, Profession profession) {
+		// 通过增加新教师来增加教师对应的课程和专业
+		Triple tri = new Triple(profession.getId(), course.getId(), teacher.getId());
 		courseItemLinkedMatrix.set(tri);
+		String errorMessage = "新增教师-课表失败";
+		writerContent(file, errorMessage);
+
+		refresh();
+	}
+
+	@Override
+	public void alertCourseItem(CourseItem[] courses, int teacherId) {
+
+		// 先把原来教师所教的专业和课程全部清空。这里清除的是teacherSet(通过教师id查找特定的courseItem)
+		CourseItem courseItemTemp = new CourseItem();
+		courseItemTemp.setTeacherId(teacherId);
+		// 得到教师对应的所有专业和课程
+		SeqList<CourseItem> courseItemForThisTeacher = this.teacherSet.search(courseItemTemp);
+		// 清空三元矩阵中所有与该教师有关的专业和课程
+		// 只要设置值为0，就会删除
+		for (int i = 0; i < courseItemForThisTeacher.size() && courseItemForThisTeacher.get(i) != null; i++) {
+			Triple tri = new Triple(courseItemForThisTeacher.get(i).getProfessionId(),
+					courseItemForThisTeacher.get(i).getCourseId(), 0);
+			courseItemLinkedMatrix.set(tri);
+
+		}
+
+		// 修改专业
+		// 如果courses为空，那么不会执行下列循环
+		for (int i = 0; i < courses.length; i++) {
+			Triple tri = new Triple(courses[i].getProfessionId(), courses[i].getCourseId(), courses[i].getTeacherId());
+			courseItemLinkedMatrix.set(tri);
+		}
 		String errorMessage = "修改失败";
 		writerContent(file, errorMessage);
 	}
@@ -132,7 +175,8 @@ public class CourseItemDaoImpl implements CourseItemDao {
 			for (int i = 0; i < seqTemp.size(); i++) {
 				// 获取每一行的链表
 				Node<Triple> p = seqTemp.get(i).head.next;
-				if (p != null) {
+
+				while (p != null) {
 					// 获取专业id
 					int professionId = p.data.getRow();
 					// 获取专业排序表，以便通过专业id查找专业名
@@ -168,6 +212,7 @@ public class CourseItemDaoImpl implements CourseItemDao {
 					out.write(professionId + "-" + professionName + "/" + courseId + "-" + courseName + "/" + teacherId
 							+ "-" + teacherName);
 					out.newLine();
+					p = p.next;
 				}
 			}
 			out.flush();
@@ -177,4 +222,62 @@ public class CourseItemDaoImpl implements CourseItemDao {
 		}
 	}
 
+	// private HashSet<CourseItem> getHashSet() {
+	// return this.teacherSet;
+	// }
+
+	@Override
+	public List<CourseItem> findCourseItemByTeacherId(int id) {
+		// 返回教师id对应的courseItem
+
+		CourseItem courseItemTemp = new CourseItem();
+		courseItemTemp.setTeacherId(id);
+		SeqList<CourseItem> courseItemForTeacher = this.teacherSet.search(courseItemTemp);
+		List<CourseItem> courseList = new ArrayList<CourseItem>(courseItemForTeacher.size());
+		for (int i = 0; i < courseItemForTeacher.size() && courseItemForTeacher.get(i) != null; i++) {
+			courseList.add(courseItemForTeacher.get(i));
+		}
+		return courseList;
+	}
+
+	@Override
+	// 通过专业查找课程，这里输入的是专业id
+	// 通过三元组中的行号（专业号）输出列号（课程号）
+	public List<Course> findCourseListByProfessionId(int professionId) {
+		CourseDao courseDao = new CourseDaoImpl();
+		Triple[] courses = this.courseItemLinkedMatrix.getElementsOfRow(professionId);
+		List<Course> coursesList = new ArrayList<Course>();
+		// 需要返回的是列号
+		for (int i = 0; i < courses.length && courses[i] != null; i++) {
+			// 课程id
+			int courseId = courses[i].getColumn();
+			// 从课程id找到课程然后放入课程集合中
+			coursesList.add(courseDao.getCourseById(courseId));
+		}
+
+		return coursesList;
+	}
+
+	@Override
+	public void deleteCourseItemByTeacherId(int teacherId) {
+		// 通过传进来的教师id删除该教师对应的专业和课程
+		// 先从teacherSet中找到该教师id对应的所有专业和课程，然后清空
+		CourseItem courseItem = new CourseItem();
+		courseItem.setTeacherId(teacherId);
+		SeqList<CourseItem> courseItemForTeacher = teacherSet.search(courseItem);
+		// 从集合中获取全部专业和课程，然后删除对应在三元矩阵中的数据
+		for (int i = 0; i < courseItemForTeacher.size(); i++) {
+			// 设置三元组的值为0就相当于删除该三元组
+			Triple tri = new Triple(courseItemForTeacher.get(i).getProfessionId(),
+					courseItemForTeacher.get(i).getCourseId(), 0);
+			courseItemLinkedMatrix.set(tri);
+		}
+		String errorMessage = "删除失败";
+		writerContent(file, errorMessage);
+	}
+
+	// 更新数据，重新从本地读取数据
+	private void refresh() {
+		readContent(file);
+	}
 }
