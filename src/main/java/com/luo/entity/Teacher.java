@@ -3,9 +3,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import com.luo.base.list.SeqList;
-
-/**
+ /**
  * 教师类
  * 
  * @author 10487

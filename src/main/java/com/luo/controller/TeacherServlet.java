@@ -19,6 +19,7 @@ public class TeacherServlet extends HttpServlet {
 
 	TeacherService teacherService = new TeacherServiceImpl();
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 获取请求的方法

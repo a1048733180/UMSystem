@@ -1,8 +1,5 @@
 package com.luo.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 专业课程对应类
  * 

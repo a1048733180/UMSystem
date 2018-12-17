@@ -2,8 +2,6 @@ package com.luo.entity;
 
 import java.util.List;
 
-import com.luo.base.list.SeqList;
-
 /**
  * 专业类
  * 

@@ -1,16 +1,16 @@
 package com.luo.service.impl;
 
+import com.luo.base.list.SeqList;
+import com.luo.dao.TeacherDao;
+import com.luo.dao.TeacherDao;
+import com.luo.dao.impl.TeacherDaoImpl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.luo.base.list.SeqList;
-import com.luo.dao.CourseItemDao;
-import com.luo.dao.TeacherDao;
-import com.luo.dao.impl.CourseItemDaoImpl;
-import com.luo.dao.impl.TeacherDaoImpl;
+import com.luo.entity.CourseItem;
 import com.luo.entity.CourseItem;
 import com.luo.entity.Page;
 import com.luo.entity.Teacher;

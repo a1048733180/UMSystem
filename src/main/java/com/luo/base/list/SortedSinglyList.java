@@ -1,7 +1,5 @@
 package com.luo.base.list;
 
-import java.util.Iterator;
-
 /**
  * @param <T>
  * @Description 排序循环双链表

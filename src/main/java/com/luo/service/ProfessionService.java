@@ -1,6 +1,5 @@
 package com.luo.service;
 
-import com.luo.base.list.SortedSinglyList;
 import com.luo.entity.Profession;
 
 /**

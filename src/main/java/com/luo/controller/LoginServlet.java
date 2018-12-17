@@ -1,5 +1,7 @@
 package com.luo.controller;
 
+import com.luo.tools.CodeTool;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -12,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.luo.entity.User;
 import com.luo.service.UserService;
 import com.luo.service.impl.UserServiceImpl;
-import com.luo.tools.CodeTool;
 
 public class LoginServlet extends HttpServlet {
 

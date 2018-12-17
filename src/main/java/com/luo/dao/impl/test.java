@@ -1,11 +1,9 @@
 package com.luo.dao.impl;
 
-import com.luo.base.list.SortedCirDoublyList;
 import com.luo.dao.StudentDao;
-import com.luo.entity.Student;
 
 public class test {
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
 //		StudentDaoImpl stuDao = new StudentDaoImpl();
 //		// System.out.println(stuDao.studentList.toString());
@@ -23,7 +21,7 @@ public class test {
 //
 //		stuDao.alertStudent(stu);
 //		System.out.println(stuDao.selectStudentById(311600421).toString());
-		
+
 //		Student stu = new Student();
 //		stu.setId(311600400);
 //		stu.setName("林紫真");
@@ -33,9 +31,9 @@ public class test {
 //	
 //		StudentServiceImpl ste = new StudentServiceImpl();
 //		ste.insertStudent(stu);
-		
-		StudentDao stu = new StudentDaoImpl();
-		System.out.println(stu.getStudentList().toString());
-		
-	}
+
+        StudentDao stu = new StudentDaoImpl();
+        System.out.println(stu.getStudentList().toString());
+
+    }
 }

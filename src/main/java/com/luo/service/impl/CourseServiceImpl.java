@@ -1,13 +1,13 @@
 package com.luo.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.luo.base.list.SeqList;
 import com.luo.dao.CourseDao;
 import com.luo.dao.ProfessionItemDao;
 import com.luo.dao.impl.CourseDaoImpl;
 import com.luo.dao.impl.ProfessionItemDaoImpl;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.luo.entity.Course;
 import com.luo.entity.Profession;
 import com.luo.service.CourseService;

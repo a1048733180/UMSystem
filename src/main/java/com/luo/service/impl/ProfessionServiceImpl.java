@@ -1,14 +1,14 @@
 package com.luo.service.impl;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import com.luo.base.list.SortedCirDoublyList;
 import com.luo.dao.ProfessionDao;
 import com.luo.dao.ProfessionItemDao;
 import com.luo.dao.impl.ProfessionDaoImpl;
 import com.luo.dao.impl.ProfessionItemDaoImpl;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import com.luo.entity.Profession;
 import com.luo.service.ProfessionService;
 

@@ -1,6 +1,7 @@
 package com.luo.service.impl;
 
 import com.luo.dao.ProfessionItemDao;
+import com.luo.dao.ProfessionItemDao;
 import com.luo.dao.impl.ProfessionItemDaoImpl;
 import com.luo.entity.ProfessionItem;
 import com.luo.service.ProfessionItemService;

@@ -101,7 +101,7 @@ public class CirDoublyList<T> {
 
 	public DoubleNode<T> insertDifferent(T x) // 插入不重复元素。查找不成功时尾插入
 	{
-		return null;// ??
+		return null;
 	}
 
 	// 删除首个与key相等元素结点，返回被删除元素，查找不成功返回null。O(n)。
@@ -119,7 +119,7 @@ public class CirDoublyList<T> {
 	public String toString()           //返回循环双链表所有元素的描述字符串，循环双链表遍历算法，O(n)
     {
         String str=this.getClass().getName()+"(";          //返回类名
-        for (DoubleNode<T> p=this.head.next;  p!=this.head;  p=p.next)
+        for (DoubleNode<T> p = this.head.next; p!=this.head; p=p.next)
         {
             str += p.data.toString();
             if (p.next!=this.head) 
