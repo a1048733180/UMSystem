@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getAdmin(User user) {
+	public boolean getAdmin(User user) {
 		// 检验登陆账户密码是否正确
 		return userDao.getAdmin(user);
 	}

@@ -3,13 +3,13 @@ package com.luo.dao.impl;
 import com.luo.base.list.SinglyList;
 import com.luo.dao.UserDao;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 import com.luo.entity.User;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 /**
  * 登陆用户操作接口实现类
@@ -62,11 +62,31 @@ public class UserDaoImpl implements UserDao {
         return this.userList;
     }
 
-    @Override
-    public User getAdmin(User user) {
-        // TODO Auto-generated method stub
-        readContent(user.getType());
+//    @Override
+//    public User getAdmin(User user) {
+//        // TODO Auto-generated method stub
+//        readContent(user.getType());
+//
+//        return this.getUserList().equalsElements(user);
+//    }
 
-        return this.getUserList().equalsElements(user);
+
+    @Override
+    public boolean getAdmin(User user) {
+        String resource = "conf.xml";
+        try {
+            InputStream inputStream = Resources.getResourceAsStream(resource);
+            SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(inputStream);
+            SqlSession session = factory.openSession();
+            String statement = "com.luo.dao.UserDao.getAdmin";
+            int exist = session.selectOne(statement, user);
+            session.close();
+            if(exist == 0){
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }

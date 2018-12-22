@@ -32,8 +32,8 @@ public class test {
 //		StudentServiceImpl ste = new StudentServiceImpl();
 //		ste.insertStudent(stu);
 
-        StudentDao stu = new StudentDaoImpl();
-        System.out.println(stu.getStudentList().toString());
+        //StudentDao stu = new StudentDaoImpl();
+        //System.out.println(stu.getStudentList().toString());
 
     }
 }

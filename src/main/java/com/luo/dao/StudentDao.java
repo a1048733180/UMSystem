@@ -4,6 +4,8 @@ import com.luo.base.list.SeqList;
 import com.luo.base.list.SortedCirDoublyList;
 import com.luo.entity.Student;
 
+import java.util.List;
+
 /**
  * 学生信息操作接口
  * 
@@ -12,26 +14,41 @@ import com.luo.entity.Student;
  */
 public interface StudentDao {
 
-	// 增加学生
+	/**
+	 * 增加学生
+	 * @param student
+	 */
 	void insertStudent(Student student);
 
-	// 删除学生(根据学生id)
-	void deleteStudent(int id);
+	/**
+	 *  删除学生 根据学生id
+	 * @param id
+	 */
+	void deleteStudent(long id);
 
-	// 通过学生id查询学生
-	Student selectStudentById(int id);
+	/**
+	 * 通过学生id查询学生
+	 * @param id
+	 * @return
+	 */
+	Student selectStudentById(long id);
 
-	// 通过学生姓名查询学生
 
-	// 修改学生信息
+	/**
+	 *  修改学生信息
+	 * @param student
+	 */
 	void alertStudent(Student student);
 
 	// 获取学生列表
-	SortedCirDoublyList<Student> getStudentList();
+	// SortedCirDoublyList<Student> getStudentList();
 
-	// 获取学生列表数组
-	SeqList<Student> getStudentSeqList();
+	/**
+	 * 获取学生列表
+	 * @return
+	 */
+	List<Student> getStudent();
 
-	// 把学生链表转化成学生顺序表
-	void changeToSeqList();
+
+
 }

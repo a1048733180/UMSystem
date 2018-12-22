@@ -2,99 +2,92 @@ package com.luo.entity;
 
 /**
  * 学生类
- * 
+ * 18.12.19
  * @author L99
- * 
+ *
  */
 public class Student implements Comparable<Student> {
 
-	private int id; // 学号
+    // 学号
+    private long studentId;
 
-	private String name; // 名字
+    // 名字
+    private String studentName;
 
-	private String sex; // 性别
+    // 性别
+    private String studentSex;
 
-	private int age; // 年龄
+    //
+    private Profession studentProfession;
 
-	private Profession profession; // 专业
+    // 生日
+    private String studentBirthday;
 
-	private int professionId; // 专业id
+    // 联系方式
+    private String studentTel;
 
-	private String introduce; // 简介
+    public long getStudentId() {
+        return studentId;
+    }
 
-	public Student() {
-	}
+    public void setStudentId(long studentId) {
+        this.studentId = studentId;
+    }
 
-	public Student(int id) {
-		this.id = id;
-	}
+    public String getStudentName() {
+        return studentName;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public String getStudentSex() {
+        return studentSex;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setStudentSex(String studentSex) {
+        this.studentSex = studentSex;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Profession getStudentProfession() {
+        return studentProfession;
+    }
 
-	public String getSex() {
-		return sex;
-	}
+    public void setStudentProfession(Profession studentProfession) {
+        this.studentProfession = studentProfession;
+    }
 
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
+    public String getStudentBirthday() {
+        return studentBirthday;
+    }
 
-	public int getAge() {
-		return age;
-	}
+    public void setStudentBirthday(String studentBirthday) {
+        this.studentBirthday = studentBirthday;
+    }
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+    public String getStudentTel() {
+        return studentTel;
+    }
 
-	public Profession getProfession() {
-		return profession;
-	}
+    public void setStudentTel(String studentTel) {
+        this.studentTel = studentTel;
+    }
 
-	public void setProfession(Profession profession) {
-		this.profession = profession;
-	}
+    @Override
+    public int compareTo(Student st) {
+        return (this.studentId < st.studentId ? -1 : (this.studentId == st.studentId) ? 0 : 1);
+    }
 
-	public int getProfessionId() {
-		return professionId;
-	}
-
-	public void setProfessionId(int professionId) {
-		this.professionId = professionId;
-	}
-
-	public String getIntroduce() {
-		return introduce;
-	}
-
-	public void setIntroduce(String introduce) {
-		this.introduce = introduce;
-	}
-
-	@Override
-	public int compareTo(Student st) {
-		return (this.id < st.id ? -1 : (this.id == st.id) ? 0 : 1);
-	}
-
-//	@Override
-//	public String toString() {
-//		return "Student [id=" + id + ", name=" + name + ", sex=" + sex + ", age=" + age + ", professionId="
-//				+ professionId + ", introduce=" + introduce + "]";
-//	}
-	
-	
+    @Override
+    public String toString() {
+        return "Student{" +
+                "studentId=" + studentId +
+                ", studentName='" + studentName + '\'' +
+                ", studentSex='" + studentSex + '\'' +
+                ", studentProfession=" + studentProfession +
+                ", studentBirthday='" + studentBirthday + '\'' +
+                ", studentTel='" + studentTel + '\'' +
+                '}';
+    }
 }

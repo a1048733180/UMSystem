@@ -14,10 +14,10 @@ public interface StudentService {
 	void insertStudent(Student student);
 	
 	// 定义删除学生(根据Id)方法
-	void deleteStudent(int id);
+	void deleteStudent(long id);
 	
 	// 定义查询学生方法
-	Student selectStudentById(int id);
+	Student selectStudentById(long id);
 	
 	// 定义修改学生方法
 	void alertStudent(Student student);

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.luo.dao.StudentDao">
+
+    <!--<select id="getStudent" resultMap="studentList">-->
+    <!--select * from u_student s,u_profession p where s.student_profession_id = p.profession_id-->
+    <!--</select>-->
+    <!-- student 是一个视图 视图定义已经进行学生表和专业表的联立可以直接拿去专业名 -->
+    <select id="getStudent" resultMap="studentList">
+        select * from student
+    </select>
+
+    <resultMap id="studentList" type="com.luo.entity.Student">
+        <id property="studentId" column="student_id"/>
+        <result property="studentName" column="student_name"/>
+        <result property="studentSex" column="student_sex"/>
+        <result property="studentBirthday" column="student_birthday"/>
+        <result property="studentTel" column="student_tel"/>
+        <association property="studentProfession" javaType="com.luo.entity.Profession">
+            <!-- 如果不是通过视图操作 那么就是下面的方式 -->
+            <!--<id property="id" column="profession_id" />-->
+            <!--<result property="name" column="profession_name" />-->
+            <result property="id" column="student_profession_id"/>
+            <result property="name" column="student_profession_name"/>
+        </association>
+    </resultMap>
+
+    <select id="selectStudentById" parameterType="long" resultMap="studentList">
+        select * from student where student_id = #{id}
+    </select>
+
+
+    <insert id="insertStudent" parameterType="com.luo.entity.Student">
+        insert into u_student(student_id,student_name,student_sex,student_profession_id,student_birthday,student_tel)
+        values(#{studentId},#{studentName},#{studentSex},#{studentProfession.id},#{studentBirthday},#{studentTel})
+    </insert>
+
+    <update id="alertStudent" parameterType="com.luo.entity.Student">
+        update u_student set student_name = #{studentName},student_sex = #{studentSex},student_Profession_id = #{studentProfession.id},student_birthday = #{studentBirthday},student_tel = #{studentTel}
+        where student_id = #{studentId}
+    </update>
+
+    <delete id="deleteStudent" parameterType="long">
+        delete FROM u_student where student_id = #{id}
+    </delete>
+</mapper>

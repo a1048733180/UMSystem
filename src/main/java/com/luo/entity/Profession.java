@@ -41,9 +41,12 @@ public class Profession implements Comparable<Profession>{
 
 	@Override
 	public String toString() {
-		return name;
+		return "Profession{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				'}';
 	}
-	
+
 	@Override
 	public int compareTo(Profession pro) {
 		return (this.id < pro.id ? -1 : (this.id == pro.id) ? 0 : 1);

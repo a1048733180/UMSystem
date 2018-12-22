@@ -25,7 +25,7 @@ public class User {
 
 	private int id; // ID
 
-	private String account; // 账户
+	private String account; // 用户名
 
 	private String password = "111111"; // 密码：默认'111111'
 

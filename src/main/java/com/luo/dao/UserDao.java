@@ -11,5 +11,5 @@ import com.luo.entity.User;
 public interface UserDao {
 
 	// 判断用户是否在文件中存在
-	User getAdmin(User user) ;
+	boolean getAdmin(User user);
 }

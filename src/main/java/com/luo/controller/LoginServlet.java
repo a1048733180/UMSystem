@@ -65,14 +65,14 @@ public class LoginServlet extends HttpServlet {
 			user.setAccount(account);
 			user.setPassword(password);
 			user.setType(type);
-			if (userService.getAdmin(user) == null) {
+			if (!userService.getAdmin(user)) {
 				msg = "loginError";
 			}else {
-				if(user.getType() == user.USER_ADMIN) {
+				if(user.getType() == User.USER_ADMIN) {
 					msg = "admin";
-				}else if(user.getType() == user.USER_STUDENT) {
+				}else if(user.getType() == User.USER_STUDENT) {
 					msg = "student";
-				}else if(user.getType() == user.USER_TEACHER) {
+				}else if(user.getType() == User.USER_TEACHER) {
 					msg = "teacher";
 				}
 				
