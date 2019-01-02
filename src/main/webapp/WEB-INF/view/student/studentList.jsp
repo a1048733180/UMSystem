@@ -21,29 +21,29 @@
 	        fit: true,//自动大小 
 	        method: "post",
 	        url:"StudentServlet?method=StudentList&t="+new Date().getTime(),
-	        idField:'id', 
+	        idField:'studentId',
 	        singleSelect:false,//是否单选 
 	        pagination:true,//分页控件 
 	        rownumbers:true,//行号 
-	        sortName:'id',
+	        sortName:'studentId',
 	        sortOrder:'DESC', 
 	        remoteSort: false,
 	        columns: [[  
 				{field:'chk',checkbox: true,width:50},
- 		        {field:'id',title:'学号',width:200, sortable: true},    
- 		        {field:'name',title:'姓名',width:200},
- 		        {field:'sex',title:'性别',width:100},
- 		        {field:'age',title:'年龄',width:100},
- 		        {field:'profession',title:'专业',width:200, 
+ 		        {field:'studentId',title:'学号',width:200, sortable: true},
+ 		        {field:'studentName',title:'姓名',width:200},
+ 		        {field:'studentSex',title:'性别',width:100},
+ 		        {field:'studentBirthday',title:'出生年月',width:100},
+ 		        {field:'studentProfession',title:'专业',width:200,
  		        	formatter: function(value,row,index){
- 						if (row.profession){
- 							return row.profession.name;
+ 						if (row.studentProfession){
+ 							return row.studentProfession.name;
  						} else {
  							return value;
  						}
  					}
 				},
- 		        {field:'introduce',title:'简介',width:200,},
+ 		        {field:'studentTel',title:'联系方式',width:200},
 	 		]], 
 	        toolbar: "#toolbar"
 	    }); 
@@ -64,7 +64,6 @@
 	    $("#edit").click(function(){
 	    	var selectRows = $ ("#dataList").datagrid("getSelections");
         	if(selectRows.length != 1){
-        		
             	$.messager.alert("消息提醒", "请选择一条数据进行操作!", "warning");
             } else{
 		    	$("#editDialog").dialog("open");
@@ -79,7 +78,7 @@
             } else{
             	var ids = [];
             	$(selectRows).each(function(i, row){
-            		ids[i] = row.id;
+            		ids[i] = row.studentId;
             	});
             	$.messager.confirm("消息提醒", "将删除与学生相关的所有数据，确认继续？", function(r){
             		if(r){
@@ -189,11 +188,11 @@
 										//关闭窗口
 										$("#addDialog").dialog("close");
 										//清空原表格数据
-										$("#add_id").textbox('setValue', "");
-										$("#add_name").textbox('setValue', "");
-										$("#add_sex").textbox('setValue', "男");
-										$("#add_age").textbox('setValue', "");
-										$("#add_introduce").textbox('setValue', "");
+										$("#add_studentId").textbox('setValue', "");
+										$("#add_studentName").textbox('setValue', "");
+										$("#add_studentSex").textbox('setValue', "男");
+										$("#add_stuBirthday").textbox('setValue', "");
+										$("#add_stuTel").textbox('setValue', "");
 										
 										//重新刷新页面数据
 										//$('#dataList').datagrid("options").queryParams = {clazzid: clazzid};
@@ -214,13 +213,13 @@
 					plain: true,
 					iconCls:'icon-reload',
 					handler:function(){
-						$("#add_id").textbox('setValue', "");
-						$("#add_name").textbox('setValue', "");
-						$("#add_age").textbox('setValue', "");
+						$("#add_studentId").textbox('setValue', "");
+						$("#add_studentName").textbox('setValue', "");
+						$("#add_studentAge").textbox('setValue', "");
 						//重新加载专业
 						$("#add_professionList").combobox("clear");
 						$("#add_professionList").combobox("reload");
-						$("#add_introduce").textbox('setValue', "");
+						 $("#add_studentTel").textbox('setValue', "");
 					}
 				},
 			]
@@ -281,25 +280,25 @@
 					iconCls:'icon-reload',
 					handler:function(){
 						//清空表单
-						$("#edit_id").textbox('setValue', "");
-						$("#edit_sex").textbox('setValue', "男");
-						$("#edit_age").textbox('setValue', "");
+						$("#edit_studentId").textbox('setValue', "");
+						$("#edit_studentSex").textbox('setValue', "男");
+						$("#edit_studentBirthday").textbox('setValue', "");
 						$("#edit_professionList").combobox("clear");
 						$("#edit_professionList").combobox("reload");
-						$("#add_introduce").textbox('setValue', "");
+						 $("#add_studentTel").textbox('setValue', "");
 					}
 				}
 			],
 			onBeforeOpen: function(){
 				var selectRow = $("#dataList").datagrid("getSelected");
 				//设置值
-				$("#edit_id").textbox('setValue', selectRow.id);
-				$("#edit_name").textbox('setValue', selectRow.name);
-				$("#edit_sex").textbox('setValue', selectRow.sex);
-				$("#edit_age").textbox('setValue', selectRow.age);
-				var professionid = selectRow.professionId;
+				$("#edit_studentId").textbox('setValue', selectRow.studentId);
+				$("#edit_studentName").textbox('setValue', selectRow.studentName);
+				$("#edit_studentSex").textbox('setValue', selectRow.studentSex);
+				$("#edit_studentBirthday").textbox('setValue', selectRow.studentBirthday);
+				var professionid = selectRow.studentProfession.id;
 				$("#edit_professionList").combobox('setValue', professionid);
-				$("#edit_introduce").textbox('setValue', selectRow.introduce);
+				$("#edit_studentTel").textbox('setValue', selectRow.studentTel);
 			}
 	    });
 	   
@@ -331,28 +330,28 @@
 	    		<tr>
 	    			<td>学号:</td>
 	    			<td>
-	    				<input id="add_id"  class="easyui-textbox" style="width: 200px; height: 30px;" type="text" name="id" data-options="required:true, validType:'repeat', missingMessage:'请输入学号'" />
+	    				<input id="add_studentId"  class="easyui-textbox" style="width: 200px; height: 30px;" type="text" name="id" data-options="required:true, validType:'repeat', missingMessage:'请输入学号'" />
 	    			</td>
 	    		</tr>
 	    		<tr>
 	    			<td>姓名:</td>
-	    			<td><input id="add_name" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="name" data-options="required:true, missingMessage:'请填写姓名'" /></td>
+	    			<td><input id="add_studentName" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="name" data-options="required:true, missingMessage:'请填写姓名'" /></td>
 	    		</tr>
 	    		<tr>
 	    			<td>性别:</td>
-	    			<td><select id="add_sex" class="easyui-combobox" data-options="editable: false, panelHeight: 50, width: 60, height: 30" name="sex"><option value="男">男</option><option value="女">女</option></select></td>
+	    			<td><select id="add_studentSex" class="easyui-combobox" data-options="editable: false, panelHeight: 50, width: 60, height: 30" name="sex"><option value="男">男</option><option value="女">女</option></select></td>
 	    		</tr>
 	    		<tr>
-	    			<td>年龄:</td>
-	    			<td><input id="add_age" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="age" validType="number" /></td>
+	    			<td>出生年月:</td>
+	    			<td><input id="add_studentBirthday" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="birthday"  /></td>
 	    		</tr>
 	    		<tr>
 	    			<td>专业:</td>
 	    			<td><input id="add_professionList" style="width: 200px; height: 30px;" class="easyui-textbox" name="professionid" /></td>
 	    		</tr>
 	    		<tr>
-	    			<td>简介:</td>
-	    			<td><input id="add_introduce" style="width: 200px; height: 50px;" class="easyui-textbox" name="introduce" /></td>
+	    			<td>联系方式:</td>
+	    			<td><input id="add_studentTel" style="width: 200px; height: 50px;" class="easyui-textbox" name="tel" /></td>
 	    		</tr>
 	    	</table>
 	    </form>
@@ -365,28 +364,28 @@
 	    		<tr>
 	    			<td>学号:</td>
 	    			<td>
-	    				<input id="edit_id" data-options="readonly: true" class="easyui-textbox" style="width: 200px; height: 30px;" type="text" name="id" data-options="required:true, validType:'repeat', missingMessage:'请输入学号'" />
+	    				<input id="edit_studentId" data-options="readonly: true" class="easyui-textbox" style="width: 200px; height: 30px;" type="text" name="id" data-options="required:true, validType:'repeat', missingMessage:'请输入学号'" />
 	    			</td>
 	    		</tr>
 	    		<tr>
 	    			<td>姓名:</td>
-	    			<td><input id="edit_name" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="name" data-options="required:true, missingMessage:'请填写姓名'" /></td>
+	    			<td><input id="edit_studentName" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="name" data-options="required:true, missingMessage:'请填写姓名'" /></td>
 	    		</tr>
 	    		<tr>
 	    			<td>性别:</td>
-	    			<td><select id="edit_sex" class="easyui-combobox" data-options="editable: false, panelHeight: 50, width: 60, height: 30" name="sex"><option value="男">男</option><option value="女">女</option></select></td>
+	    			<td><select id="edit_studentSex" class="easyui-combobox" data-options="editable: false, panelHeight: 50, width: 60, height: 30" name="sex"><option value="男">男</option><option value="女">女</option></select></td>
 	    		</tr>
 	    		<tr>
-	    			<td>年龄:</td>
-	    			<td><input id="edit_age" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="age" validType="number" /></td>
+	    			<td>出生年月:</td>
+	    			<td><input id="edit_studentBirthday" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="birthday"  /></td>
 	    		</tr>
 	    		<tr>
 	    			<td>专业:</td>
 	    			<td><input id="edit_professionList" style="width: 200px; height: 30px;" class="easyui-textbox" name="professionid" /></td>
 	    		</tr>
 	    		<tr>
-	    			<td>简介:</td>
-	    			<td><input id="edit_introduce" style="width: 200px; height: 50px;" class="easyui-textbox" name="introduce" /></td>
+	    			<td>联系方式:</td>
+	    			<td><input id="edit_studentTel" style="width: 200px; height: 50px;" class="easyui-textbox" name="tel" /></td>
 	    		</tr>
 	    	</table>
 	    </form>

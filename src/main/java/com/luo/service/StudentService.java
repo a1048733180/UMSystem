@@ -11,7 +11,7 @@ import com.luo.entity.Student;
 public interface StudentService {
 	
 	// 定义添加学生方法
-	void insertStudent(Student student);
+	int insertStudent(Student student);
 	
 	// 定义删除学生(根据Id)方法
 	void deleteStudent(long id);

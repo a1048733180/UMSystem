@@ -18,7 +18,7 @@ public interface StudentDao {
 	 * 增加学生
 	 * @param student
 	 */
-	void insertStudent(Student student);
+	int insertStudent(Student student);
 
 	/**
 	 *  删除学生 根据学生id

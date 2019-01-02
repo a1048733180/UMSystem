@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.luo.base.list.LinkedMatrix;
@@ -183,7 +184,15 @@ public class CourseItemDaoImpl implements CourseItemDao {
                     ProfessionDaoImpl professionList = new ProfessionDaoImpl();
                     Profession p1 = new Profession();
                     p1.setId(professionId);
-                    p1 = professionList.getProfessionList().find(p1);
+                    List<Profession> professions = professionList.getProfession();
+                    Iterator<Profession> iterator = professions.iterator();
+                    while(iterator.hasNext()){
+                        Profession profession = iterator.next();
+                        if(profession.getId() == p1.getId()){
+                            p1 = profession;
+                            break;
+                        }
+                    }
                     // 获取专业名
                     String professionName = p1.getName();
 

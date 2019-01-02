@@ -3,6 +3,8 @@ package com.luo.dao;
 import com.luo.base.list.SortedCirDoublyList;
 import com.luo.entity.Profession;
 
+import java.util.List;
+
 /**
  * 专业信息操作接口
  * 
@@ -24,7 +26,7 @@ public interface ProfessionDao {
 	int professionCount();
 	
 	// 返回专业列表
-	SortedCirDoublyList<Profession> getProfessionList();
+	List<Profession> getProfession();
 	
 	// 通过专业id查找专业
 	Profession findProfession(int professionId);

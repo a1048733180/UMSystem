@@ -1,14 +1,13 @@
 package com.luo;
 
 import com.luo.dao.StudentDao;
-//import com.luo.dao.impl.StudentDaoImpl;
 import com.luo.entity.Profession;
 import com.luo.entity.Student;
 import com.luo.service.StudentService;
 import com.luo.service.impl.StudentServiceImpl;
 import com.luo.util.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
-
+import org.junit.Test;
 
 import java.util.List;
 
@@ -47,10 +46,21 @@ public class DateTest {
         Profession profession = new Profession();
         profession.setId(2);
         student.setStudentProfession(profession);
+        StudentService studentService = new StudentServiceImpl();
+        System.out.println(studentService.insertStudent(student));
 
-        studentDao.insertStudent(student);
-        sqlSession.commit();
-        sqlSession.close();
+//        studentDao.insertStudent(student);
+//        sqlSession.commit();
+//        sqlSession.close();
         //studentDao.deleteStudent(3116004244l);
     }
+
+    @Test
+    public void test(){
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        StudentDao studentDao = sqlSession.getMapper(StudentDao.class);
+        studentDao.getStudent().stream().forEach(System.out::println);
+    }
 }
+
+

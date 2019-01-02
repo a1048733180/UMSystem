@@ -17,7 +17,8 @@
 
     <mappers>
         <mapper resource="com/luo/mapper/UserMapper.xml" />
-        <mapper resource="com/luo/mapper/studentMapper.xml" />
+        <mapper resource="com/luo/mapper/StudentMapper.xml" />
+        <mapper resource="com/luo/mapper/ProfessionMapper.xml" />
     </mappers>
 
 

@@ -5,7 +5,7 @@ import com.luo.service.ProfessionService;
 public class text {
 	public static void main(String[] args) {
 		ProfessionService p = new ProfessionServiceImpl();
-		String course = "course";
+		String course = "";
 		System.out.println(p.getProfessionList(course));
 	}
 }
