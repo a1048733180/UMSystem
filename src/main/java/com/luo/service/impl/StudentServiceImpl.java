@@ -78,12 +78,12 @@ public class StudentServiceImpl implements StudentService {
                 jsonMap.put("rows", stuTemp);
             } else {
                 // 如果不为空，则分专业查看
-                int professionId = student.getStudentProfession().getId();
+                int professionId = student.getStudentProfession().getProfessionId();
                 // 获取分专业后的学生顺序表(默认的数组大小是64)
                 List<Student> professionList = new ArrayList<>();
                 for (int i = 0; i < studentList.size(); i++) {
                     // 查找学生表中特定id的学生
-                    if (studentList.get(i).getStudentProfession().getId() == professionId) {
+                    if (studentList.get(i).getStudentProfession().getProfessionId() == professionId) {
                         professionList.add(studentList.get(i));
                     }
                 }

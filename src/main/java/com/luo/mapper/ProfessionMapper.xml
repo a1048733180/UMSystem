@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.luo.dao.ProfessionDao">
+    <select id="getProfession" resultMap="professionList">
+        select * from u_profession
+    </select>
+
+    <resultMap id="professionList" type="com.luo.entity.Profession">
+        <id property="professionId" column="profession_id"/>
+        <result property="professionName" column="profession_name" />
+    </resultMap>
+</mapper>

@@ -1,88 +1,112 @@
- package com.luo.entity;
+package com.luo.entity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
- /**
+/**
  * 教师类
- * 
+ *
  * @author 10487
  *
  */
-public class Teacher implements Comparable<Teacher>{
-	private int id; // 教师id
+public class Teacher implements Comparable<Teacher> {
+    private int teacherId; // 教师id
 
-	private String name; // 教师名字
+    private String teacherName; // 教师名字
 
-	private String sex; // 性别
+    private String teacherSex; // 性别
 
-	private String entryYear; // 入职年份
+    private String entryYear; // 入职年份
 
-	private String jobTitle; // 职称
+    private String jobTitle; // 职称
 
-	private String[] courses = new String[] {}; // 课程集合
+    private String teacherTel;
 
-	private List<CourseItem> courseList = new ArrayList<>(); // 课表和哪里上课
+    private String[] courses = new String[]{}; // 课程集合
 
-	public int getId() {
-		return id;
-	}
+    private List<CourseItem> courseList = new ArrayList<>(); // 课表和哪里上课
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getTeacherId() {
+        return teacherId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setTeacherId(int teacherId) {
+        this.teacherId = teacherId;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getTeacherName() {
+        return teacherName;
+    }
 
-	public String getSex() {
-		return sex;
-	}
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
 
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
+    public String getTeacherSex() {
+        return teacherSex;
+    }
 
-	public String getEntryYear() {
-		return entryYear;
-	}
+    public void setTeacherSex(String teacherSex) {
+        this.teacherSex = teacherSex;
+    }
 
-	public void setEntryYear(String entryYear) {
-		this.entryYear = entryYear;
-	}
+    public String getEntryYear() {
+        return entryYear;
+    }
 
-	public String getJobTitle() {
-		return jobTitle;
-	}
+    public void setEntryYear(String entryYear) {
+        this.entryYear = entryYear;
+    }
 
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
-	}
+    public String getJobTitle() {
+        return jobTitle;
+    }
 
-	public String[] getCourses() {
-		return courses;
-	}
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
 
-	public void setCourses(String[] courses) {
-		this.courses = courses;
-	}
+    public String getTeacherTel() {
+        return teacherTel;
+    }
 
-	public List<CourseItem> getCourseList() {
-		return courseList;
-	}
+    public void setTeacherTel(String teacherTel) {
+        this.teacherTel = teacherTel;
+    }
 
-	public void setCourseList(List<CourseItem> courseList) {
-		this.courseList = courseList;
-	}
-	
-	@Override
-	public int compareTo(Teacher te) {
-		return (this.id < te.id ? -1 : (this.id == te.id) ? 0 : 1);
-	}
+    public String[] getCourses() {
+        return courses;
+    }
 
+    public void setCourses(String[] courses) {
+        this.courses = courses;
+    }
+
+    public List<CourseItem> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<CourseItem> courseList) {
+        this.courseList = courseList;
+    }
+
+    @Override
+    public int compareTo(Teacher te) {
+        return (this.teacherId < te.teacherId ? -1 : (this.teacherId == te.teacherId) ? 0 : 1);
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "teacherId=" + teacherId +
+                ", teacherName='" + teacherName + '\'' +
+                ", teacherSex='" + teacherSex + '\'' +
+                ", entryYear='" + entryYear + '\'' +
+                ", jobTitle='" + jobTitle + '\'' +
+                ", teacherTel='" + teacherTel + '\'' +
+                ", courses=" + Arrays.toString(courses) +
+                ", courseList=" + courseList +
+                '}';
+    }
 }

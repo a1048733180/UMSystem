@@ -44,20 +44,22 @@ public class ProfessionServiceImpl implements ProfessionService {
         ProfessionDao mapper = getSqlSession().getMapper(ProfessionDao.class);
         List<Profession> professionList = mapper.getProfession();
 
-        // 存放经过筛选后的专业，如果没有筛选，则为全部专业
-        List<Profession> professionTemp = new ArrayList<Profession>();
 
-        for (int i = 0; i < professionList.size(); i++) {
-            professionTemp.add(professionList.get(i));
-        }
 
         if (!(course == null || "".equals(course.trim()))) {
             // 如果传进来的课程不为空，说明要返回的有专业的id、名称、和对应的课程
             ProfessionItemDao professionItemDao = new ProfessionItemDaoImpl();
+
+            // 存放经过筛选后的专业
+            List<Profession> professionTemp = new ArrayList<Profession>();
+
+            for (int i = 0; i < professionList.size(); i++) {
+                professionTemp.add(professionList.get(i));
+            }
             Iterator<Profession> it = professionTemp.iterator();
             while (it.hasNext()) {
                 Profession p = it.next();
-                p.setCourseList(professionItemDao.findCourseListByProfessionId(p.getId()));
+                p.setCourseList(professionItemDao.findCourseByProfessionId(p.getProfessionId()));
             }
             JsonConfig config = new JsonConfig();
             config.setExcludes(new String[]{"majorRequired", "optional", "required"});
@@ -66,8 +68,9 @@ public class ProfessionServiceImpl implements ProfessionService {
         } else {
             // 说明返回的只有专业的id和名称，不用返回对应的课程
             JsonConfig config = new JsonConfig();
-            config.setExcludes(new String[]{"couseList"});
+            config.setExcludes(new String[]{"courseList"});
             String result = JSONArray.fromObject(professionList, config).toString();
+            System.out.println(result);
             return result;
         }
     }

@@ -21,8 +21,8 @@
             <!-- 如果不是通过视图操作 那么就是下面的方式 -->
             <!--<id property="id" column="profession_id" />-->
             <!--<result property="name" column="profession_name" />-->
-            <result property="id" column="student_profession_id"/>
-            <result property="name" column="student_profession_name"/>
+            <result property="professionId" column="student_profession_id"/>
+            <result property="professionName" column="student_profession_name"/>
         </association>
     </resultMap>
 
@@ -33,11 +33,11 @@
 
     <insert id="insertStudent" parameterType="com.luo.entity.Student">
         insert into u_student(student_id,student_name,student_sex,student_profession_id,student_birthday,student_tel)
-        values(#{studentId},#{studentName},#{studentSex},#{studentProfession.id},#{studentBirthday},#{studentTel})
+        values(#{studentId},#{studentName},#{studentSex},#{studentProfession.professionId},#{studentBirthday},#{studentTel})
     </insert>
 
     <update id="alertStudent" parameterType="com.luo.entity.Student">
-        update u_student set student_name = #{studentName},student_sex = #{studentSex},student_Profession_id = #{studentProfession.id},student_birthday = #{studentBirthday},student_tel = #{studentTel}
+        update u_student set student_name = #{studentName},student_sex = #{studentSex},student_Profession_id = #{studentProfession.professionId},student_birthday = #{studentBirthday},student_tel = #{studentTel}
         where student_id = #{studentId}
     </update>
 

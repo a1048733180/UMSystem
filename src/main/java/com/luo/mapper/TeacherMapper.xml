@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.luo.dao.TeacherDao">
+
+    <!-- 这里的查询是采用多表查询 -->
+    <!-- 也可以在应用层分开查询，分别查询不同的表，再把查询结果联立 -->
+    <select id="getTeacher" resultMap="TeacherList" >
+       SELECT
+  a.*,
+  c.course_id,
+  c.course_name,
+  d.profession_id,
+  d.profession_name
+ FROM
+  u_teacher a
+  LEFT JOIN u_course_teacher b
+    ON a.`teacher_id` = b.`teacher_id`
+  LEFT JOIN u_course c
+    ON c.`course_id` = b.`course_id`
+  LEFT JOIN u_profession d
+    ON d.`profession_id` = b.`profession_id`
+    </select>
+
+    <resultMap id="TeacherList" type="com.luo.entity.Teacher">
+        <id property="teacherId" column="teacher_id"/>
+        <result property="teacherName" column="teacher_name"/>
+        <result property="teacherSex" column="teacher_sex"/>
+        <result property="entryYear" column="teacher_entry_year"/>
+        <result property="jobTitle" column="teacher_jobTitle"/>
+        <result property="teacherTel" column="teacher_tel"/>
+        <association property="courseList" javaType="com.luo.entity.CourseItem">
+            <association property="profession" javaType="com.luo.entity.Profession">
+                <id property="professionId" column="profession_id"/>
+                <result property="professionName" column="profession_name"/>
+            </association>
+            <association property="course" javaType="com.luo.entity.Course">
+                <id property="courseId" column="course_id"/>
+                <result property="courseName" column="course_name"/>
+            </association>
+        </association>
+    </resultMap>
+
+    <insert id="insertTeacher" parameterType="com.luo.entity.Teacher">
+        insert into u_teacher(teacher_id,teacher_name,teacher_sex,teacher_tel,teacher_entry_year,teacher_jobTitle)
+        values (#{teacherId},#{teacherName},#{teacherSex},#{teacherTel},#{entryYear},#{jobTitle})
+    </insert>
+
+    <update id="alertTeacher" parameterType="com.luo.entity.Teacher">
+        update u_teacher set teacher_name = #{teacherName},teacher_sex = #{teacherSex}, teacher_tel = #{teacherTel}, teacher_entry_year = #{entryYear}, teacher_jobTitle = #{jobTitle}
+        where teacher_id = #{teacherId}
+    </update>
+
+    <delete id="deleteTeacher" parameterType="com.luo.entity.Teacher">
+        delete from u_teacher where teacher_id = #{teacherId}
+    </delete>
+</mapper>

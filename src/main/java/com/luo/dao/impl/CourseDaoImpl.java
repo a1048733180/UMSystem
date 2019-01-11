@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import com.luo.entity.Course;
 
@@ -43,8 +44,8 @@ public class CourseDaoImpl implements CourseDao {
 
                 Course course = new Course();
 
-                course.setId(Integer.valueOf(str[0]));
-                course.setName(str[1]);
+                course.setCourseId(Integer.valueOf(str[0]));
+                course.setCourseName(str[1]);
 
                 switch (str[2]) {
                     case "1":
@@ -66,8 +67,8 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public SortedCirDoublyList<Course> getCourseList() {
-        return this.courseList;
+    public List<Course> getCourse() {
+        return null;
     }
 
     @Override
@@ -96,7 +97,7 @@ public class CourseDaoImpl implements CourseDao {
         // 根据id寻找课程表中特定id的课程，寻找是根据comparaTo方法比较id
         Course courseTemp = courseList.find(course);
 
-        courseTemp.setName(course.getName());
+        courseTemp.setCourseName(course.getCourseName());
         courseTemp.setRequired(course.isRequired());
         courseTemp.setMajorRequired(course.isMajorRequired());
         courseTemp.setOptional(course.isOptional());
@@ -120,16 +121,16 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public SeqList<Course> getCourseSeqList() {
+    public List<Course> getCourseSeqList() {
         // 获取课程顺序表，由链表转换过来
-        return this.getCourseList().traverse();
+        return this.getCourse();
     }
 
     @Override
     // 通过课程id返回课程名
     public Course getCourseById(int id) {
         Course course = new Course();
-        course.setId(id);
+        course.setCourseId(id);
         course = this.courseList.find(course);
         return course;
     }
@@ -148,7 +149,7 @@ public class CourseDaoImpl implements CourseDao {
                 } else {
                     str += "3";
                 }
-                out.write(courseTemp.getId() + "/" + courseTemp.getName() + "/" + str);
+                out.write(courseTemp.getCourseId() + "/" + courseTemp.getCourseName() + "/" + str);
                 out.newLine();
             }
             out.flush();

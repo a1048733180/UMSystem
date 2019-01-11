@@ -37,7 +37,7 @@
  		        {field:'studentProfession',title:'专业',width:200,
  		        	formatter: function(value,row,index){
  						if (row.studentProfession){
- 							return row.studentProfession.name;
+ 							return row.studentProfession.professionName;
  						} else {
  							return value;
  						}
@@ -107,8 +107,8 @@
 	  	$("#professionList").combobox({
 	  		width: "150",
 	  		height: "25",
-	  		valueField: "id",
-	  		textField: "name",
+	  		valueField: "professionId",
+	  		textField: "professionName",
 	  		multiple: false, //可多选
 	  		editable: false, //不可编辑
 	  		method: "post",
@@ -126,8 +126,8 @@
 	  	$("#add_professionList, #edit_professionList").combobox({
 	  		width: "200",
 	  		height: "20",
-	  		valueField: "id",
-	  		textField: "name",
+	  		valueField: "professionId",
+	  		textField: "professionName",
 	  		multiple: false, //可多选
 	  		editable: false, //不可编辑
 	  		method: "post",
@@ -139,7 +139,7 @@
 			onLoadSuccess: function(){
 				//默认选择第一条数据
 				var data = $(this).combobox("getData");
-				$(this).combobox("setValue", data[0].id);
+				$(this).combobox("setValue", data[0].professionId);
 	  		}
 	  	});  
 	  	  
@@ -296,7 +296,7 @@
 				$("#edit_studentName").textbox('setValue', selectRow.studentName);
 				$("#edit_studentSex").textbox('setValue', selectRow.studentSex);
 				$("#edit_studentBirthday").textbox('setValue', selectRow.studentBirthday);
-				var professionid = selectRow.studentProfession.id;
+				var professionid = selectRow.studentProfession.professionId;
 				$("#edit_professionList").combobox('setValue', professionid);
 				$("#edit_studentTel").textbox('setValue', selectRow.studentTel);
 			}

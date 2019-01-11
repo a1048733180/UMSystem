@@ -1,10 +1,8 @@
 package com.luo.service.impl;
 
-import com.luo.base.list.SeqList;
 import com.luo.dao.CourseDao;
 import com.luo.dao.ProfessionItemDao;
 import com.luo.dao.impl.CourseDaoImpl;
-import com.luo.dao.impl.ProfessionItemDaoImpl;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +10,19 @@ import com.luo.entity.Course;
 import com.luo.entity.Profession;
 import com.luo.service.CourseService;
 
+import com.luo.util.MyBatisUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
+import org.apache.ibatis.session.SqlSession;
 
 public class CourseServiceImpl implements CourseService {
+
+	private SqlSession sqlSession;
+
+	public SqlSession getSqlSession() {
+		sqlSession = MyBatisUtil.getSqlSession();
+		return sqlSession;
+	}
 
 	CourseDao courseDao;
 
@@ -44,20 +51,19 @@ public class CourseServiceImpl implements CourseService {
 
 		// 获取全部课程
 		if (profession == null) {
-			SeqList<Course> courseList = courseDao.getCourseSeqList();
-
+			CourseDao courseDao = getSqlSession().getMapper(CourseDao.class);
+			List<Course> courseList = courseDao.getCourse();
 			for (int i = 0; i < courseList.size(); i++) {
 				courseTemp.add(courseList.get(i));
 			}
 		} else {
-//			CourseItemDao courseItem = new CourseItemDaoImpl();
-//			courseTemp = courseItem.findCourseListByProfessionId(profession.getId());
-			ProfessionItemDao professionItem = new ProfessionItemDaoImpl();
-			courseTemp = professionItem.findCourseListByProfessionId(profession.getId());
+			// 从ProfessionItemDao 中获取专业对应的专业（专业上课计划）
+			ProfessionItemDao professionItemDao = getSqlSession().getMapper(ProfessionItemDao.class);
+			courseTemp = professionItemDao.findCourseByProfessionId(profession.getProfessionId());
 		}
 		
 		JsonConfig config = new JsonConfig();
-		config.setExcludes(new String[] { "isRequired", "isMajorRequired", "isOptional" });
+		config.setExcludes(new String[] { "isRequired", "isMajorRequired", "isMajorOption","isOptional"});
 		String result = JSONArray.fromObject(courseTemp, config).toString();
 		return result;
 

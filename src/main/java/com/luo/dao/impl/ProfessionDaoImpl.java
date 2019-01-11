@@ -45,8 +45,8 @@ public class ProfessionDaoImpl implements ProfessionDao {
                 String[] str = thisLine.split("/");
                 Profession profession = new Profession();
 
-                profession.setId(Integer.valueOf(str[0]));
-                profession.setName(str[1]);
+                profession.setProfessionId(Integer.valueOf(str[0]));
+                profession.setProfessionName(str[1]);
 
                 professionList.insert(profession);
             }
@@ -63,7 +63,7 @@ public class ProfessionDaoImpl implements ProfessionDao {
         try {
             professionList.insert(profession);
             BufferedWriter out = new BufferedWriter(new FileWriter(file, true));
-            out.write(profession.getId() + "/" + profession.getName());
+            out.write(profession.getProfessionId() + "/" + profession.getProfessionName());
             out.newLine();
             out.flush();
             out.close();
@@ -87,7 +87,7 @@ public class ProfessionDaoImpl implements ProfessionDao {
     public void alertProfessioin(Profession profession) {
         // 修改专业
         Profession professionTemp = professionList.find(profession);
-        professionTemp.setName(profession.getName());
+        professionTemp.setProfessionName(profession.getProfessionName());
 
         String errorMessage = "修改专业失败";
         writerContent(file, errorMessage);
@@ -99,7 +99,7 @@ public class ProfessionDaoImpl implements ProfessionDao {
             BufferedWriter out = new BufferedWriter(new FileWriter(file));
             for (int i = 0; i < professionList.size(); i++) {
                 Profession professionTemp = professionList.get(i);
-                out.write(professionTemp.getId() + "/" + professionTemp.getName());
+                out.write(professionTemp.getProfessionId() + "/" + professionTemp.getProfessionName());
                 out.newLine();
             }
             out.flush();
@@ -119,7 +119,7 @@ public class ProfessionDaoImpl implements ProfessionDao {
     public Profession findProfession(int professionId) {
         // 通过专业id查找专业
         Profession pro = new Profession();
-        pro.setId(professionId);
+        pro.setProfessionId(professionId);
         return this.professionList.find(pro) == null ? null : this.professionList.find(pro);
     }
 }

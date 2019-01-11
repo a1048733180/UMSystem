@@ -9,26 +9,26 @@ import java.util.List;
  * 
  */
 public class Profession implements Comparable<Profession>{
-	private int id; // 专业Id
+	private int professionId; // 专业Id
 
-	private String name; // 专业名字
+	private String professionName; // 专业名字
 
 	private List<Course> courseList; // 专业要上的课程
 
-	public int getId() {
-		return id;
+	public int getProfessionId() {
+		return professionId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setProfessionId(int professionId) {
+		this.professionId = professionId;
 	}
 
-	public String getName() {
-		return name;
+	public String getProfessionName() {
+		return professionName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setProfessionName(String professionName) {
+		this.professionName = professionName;
 	}
 
 	public List<Course> getCourseList() {
@@ -42,14 +42,14 @@ public class Profession implements Comparable<Profession>{
 	@Override
 	public String toString() {
 		return "Profession{" +
-				"id=" + id +
-				", name='" + name + '\'' +
+				"professionId=" + professionId +
+				", professionName='" + professionName + '\'' +
 				'}';
 	}
 
 	@Override
 	public int compareTo(Profession pro) {
-		return (this.id < pro.id ? -1 : (this.id == pro.id) ? 0 : 1);
+		return (this.professionId < pro.professionId ? -1 : (this.professionId == pro.professionId) ? 0 : 1);
 	}
 
 }

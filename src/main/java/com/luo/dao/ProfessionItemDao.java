@@ -13,5 +13,5 @@ import com.luo.entity.Course;
 public interface ProfessionItemDao {
 	
 	// 通过专业查找课程，这里输入的是专业id
-	List<Course> findCourseListByProfessionId(int professionId);
+	List<Course> findCourseByProfessionId(int professionId);
 }

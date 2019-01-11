@@ -64,31 +64,31 @@ public class CourseItemDaoImpl implements CourseItemDao {
                 String[] professionStr = str[0].split("-");
                 Profession profession = new Profession();
                 // 建立一个专业对象，存放专业id和专业名
-                profession.setId(Integer.valueOf(professionStr[0]));
-                profession.setName(professionStr[1]);
+                profession.setProfessionId(Integer.valueOf(professionStr[0]));
+                profession.setProfessionName(professionStr[1]);
                 // CourseItem中的对应属性赋值
                 courseItem.setProfession(profession);
-                courseItem.setProfessionId(profession.getId());
+                courseItem.setProfessionId(profession.getProfessionId());
 
                 // 存放课程
                 String[] courseStr = str[1].split("-");
                 Course course = new Course();
                 // 建立一个课程对象，存放那个课程id和课程名
-                course.setId(Integer.valueOf(courseStr[0]));
-                course.setName(courseStr[1]);
+                course.setCourseId(Integer.valueOf(courseStr[0]));
+                course.setCourseName(courseStr[1]);
                 // CourseItem中的对应属性赋值
                 courseItem.setCourse(course);
-                courseItem.setCourseId(course.getId());
+                courseItem.setCourseId(course.getCourseId());
 
                 // 存放教师
                 String[] teacherStr = str[2].split("-");
                 Teacher teacher = new Teacher();
                 // 建立一个教师对象，存放教师的id和名字
-                teacher.setId(Integer.valueOf(teacherStr[0]));
-                teacher.setName(teacherStr[1]);
+                teacher.setTeacherId(Integer.valueOf(teacherStr[0]));
+                teacher.setTeacherName(teacherStr[1]);
                 // CourseItem中的对应属性赋值
                 courseItem.setTeacher(teacher);
-                courseItem.setTeacherId(teacher.getId());
+                courseItem.setTeacherId(teacher.getTeacherId());
                 // 把专业id当成行号、课程id当成列号、教师Id当作值存储在三元组里
                 Triple tri = new Triple(courseItem.getProfessionId(), courseItem.getCourseId(),
                         courseItem.getTeacherId());
@@ -113,13 +113,13 @@ public class CourseItemDaoImpl implements CourseItemDao {
         if (course.isRequired()) {
             // 如果是必须课，那么每个专业都要上
             for (int i = 0; i < new ProfessionDaoImpl().professionCount(); i++) {
-                Triple tri = new Triple(new ProfessionDaoImpl().professionList.get(i).getId(), course.getId(),
-                        teacher.getId());
+                Triple tri = new Triple(new ProfessionDaoImpl().professionList.get(i).getProfessionId(), course.getCourseId(),
+                        teacher.getTeacherId());
                 courseItemLinkedMatrix.set(tri);
             }
         } else {
             for (int j = 0; j < profession.length; j++) {
-                Triple tri = new Triple(profession[j].getId(), course.getId(), teacher.getId());
+                Triple tri = new Triple(profession[j].getProfessionId(), course.getCourseId(), teacher.getTeacherId());
                 courseItemLinkedMatrix.set(tri);
             }
         }
@@ -129,10 +129,10 @@ public class CourseItemDaoImpl implements CourseItemDao {
 
     }
 
-    @Override
+
     public void insertCourseItemByTeacher(Course course, Teacher teacher, Profession profession) {
         // 通过增加新教师来增加教师对应的课程和专业
-        Triple tri = new Triple(profession.getId(), course.getId(), teacher.getId());
+        Triple tri = new Triple(profession.getProfessionId(), course.getCourseId(), teacher.getTeacherId());
         courseItemLinkedMatrix.set(tri);
         String errorMessage = "新增教师-课表失败";
         writerContent(file, errorMessage);
@@ -140,31 +140,52 @@ public class CourseItemDaoImpl implements CourseItemDao {
         refresh();
     }
 
+//    @Override
+//    public int insertCourseItemByTeacher(CourseItem courseItem) {
+//        return 0;
+//    }
+//
+////    @Override
+////    public void alertCourseItem(CourseItem[] courses) {
+////
+////        // 先把原来教师所教的专业和课程全部清空。这里清除的是teacherSet(通过教师id查找特定的courseItem)
+////        CourseItem courseItemTemp = new CourseItem();
+////        courseItemTemp.setTeacherId(teacherId);
+////        // 得到教师对应的所有专业和课程
+////        SeqList<CourseItem> courseItemForThisTeacher = this.teacherSet.search(courseItemTemp);
+////        // 清空三元矩阵中所有与该教师有关的专业和课程
+////        // 只要设置值为0，就会删除
+////        for (int i = 0; i < courseItemForThisTeacher.size() && courseItemForThisTeacher.get(i) != null; i++) {
+////            Triple tri = new Triple(courseItemForThisTeacher.get(i).getProfessionId(),
+////                    courseItemForThisTeacher.get(i).getCourseId(), 0);
+////            courseItemLinkedMatrix.set(tri);
+////
+////        }
+//
+//        // 修改专业
+//        // 如果courses为空，那么不会执行下列循环
+//        for (int i = 0; i < courses.length; i++) {
+//            Triple tri = new Triple(courses[i].getProfessionId(), courses[i].getCourseId(), courses[i].getTeacherId());
+//            courseItemLinkedMatrix.set(tri);
+//        }
+//        String errorMessage = "修改失败";
+//        writerContent(file, errorMessage);
+//    }
+
+
     @Override
-    public void alertCourseItem(CourseItem[] courses, int teacherId) {
+    public int alertCourseItem(CourseItem courseItem) {
+        return 0;
+    }
 
-        // 先把原来教师所教的专业和课程全部清空。这里清除的是teacherSet(通过教师id查找特定的courseItem)
-        CourseItem courseItemTemp = new CourseItem();
-        courseItemTemp.setTeacherId(teacherId);
-        // 得到教师对应的所有专业和课程
-        SeqList<CourseItem> courseItemForThisTeacher = this.teacherSet.search(courseItemTemp);
-        // 清空三元矩阵中所有与该教师有关的专业和课程
-        // 只要设置值为0，就会删除
-        for (int i = 0; i < courseItemForThisTeacher.size() && courseItemForThisTeacher.get(i) != null; i++) {
-            Triple tri = new Triple(courseItemForThisTeacher.get(i).getProfessionId(),
-                    courseItemForThisTeacher.get(i).getCourseId(), 0);
-            courseItemLinkedMatrix.set(tri);
+    @Override
+    public int insertCourseItem(CourseItem courseItem) {
+        return 0;
+    }
 
-        }
-
-        // 修改专业
-        // 如果courses为空，那么不会执行下列循环
-        for (int i = 0; i < courses.length; i++) {
-            Triple tri = new Triple(courses[i].getProfessionId(), courses[i].getCourseId(), courses[i].getTeacherId());
-            courseItemLinkedMatrix.set(tri);
-        }
-        String errorMessage = "修改失败";
-        writerContent(file, errorMessage);
+    @Override
+    public int selectProfessionAndCourse(CourseItem courseItem) {
+        return 0;
     }
 
     // 写入本地文件
@@ -183,38 +204,38 @@ public class CourseItemDaoImpl implements CourseItemDao {
                     // 获取专业排序表，以便通过专业id查找专业名
                     ProfessionDaoImpl professionList = new ProfessionDaoImpl();
                     Profession p1 = new Profession();
-                    p1.setId(professionId);
+                    p1.setProfessionId(professionId);
                     List<Profession> professions = professionList.getProfession();
                     Iterator<Profession> iterator = professions.iterator();
-                    while(iterator.hasNext()){
+                    while (iterator.hasNext()) {
                         Profession profession = iterator.next();
-                        if(profession.getId() == p1.getId()){
+                        if (profession.getProfessionId() == p1.getProfessionId()) {
                             p1 = profession;
                             break;
                         }
                     }
                     // 获取专业名
-                    String professionName = p1.getName();
+                    String professionName = p1.getProfessionName();
 
                     // 获取课程id
                     int courseId = p.data.getColumn();
                     // 获取课程排序表，以便通过课程id查找课程名
                     CourseDaoImpl courseList = new CourseDaoImpl();
                     Course c1 = new Course();
-                    c1.setId(courseId);
-                    c1 = courseList.getCourseList().find(c1);
+                    c1.setCourseId(courseId);
+                    //c1 = courseList.getCourse().(c1);
                     // 获取课程名
-                    String courseName = c1.getName();
+                    String courseName = c1.getCourseName();
 
                     // 获取教师id
                     int teacherId = p.data.getValue();
                     // 获取教师排序表，以便通过教师id查找教师名
                     TeacherDaoImpl teacherList = new TeacherDaoImpl();
                     Teacher t1 = new Teacher();
-                    t1.setId(teacherId);
-                    t1 = teacherList.getTeacherList().find(t1);
+                    t1.setTeacherId(teacherId);
+                    // t1 = teacherList.getTeacherList().find(t1);
                     // 获取教师名
-                    String teacherName = t1.getName();
+                    String teacherName = t1.getTeacherName();
 
                     // 写入本地
                     // 格式为 01-信息管理与信息系统/01-高数/01-罗老师

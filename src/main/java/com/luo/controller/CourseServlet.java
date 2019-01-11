@@ -40,7 +40,7 @@ public class CourseServlet extends HttpServlet{
 		if (!(professionId == null || "".equals(professionId.trim()))) {
 			// 建一个可以从专业获取课程的方法，通过专业id获取全部课程id和name的list集合
 			profession = new Profession();
-			profession.setId(Integer.parseInt(professionId));
+			profession.setProfessionId(Integer.parseInt(professionId));
 		}
 		
 		String result = courseService.getCourseList(profession);

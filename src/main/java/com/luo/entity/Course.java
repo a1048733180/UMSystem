@@ -7,60 +7,109 @@ package com.luo.entity;
  * 
  */
 public class Course implements Comparable<Course>{
-	private int id; // 课程id
+	/**
+	 * 课程id
+	 */
+	private int courseId;
 
-	private String name; // 课程名称
+	/**
+	 * 课程名称
+	 */
+	private String courseName;
 
-	private boolean isRequired; // 是否为必修课
 
-	private boolean isMajorRequired; // 是否为专业必修课
+	/**
+	 * 公共基础
+	 */
+	private boolean isRequired;
 
-	private boolean isOptional; // 是否为专业选修课
+	/**
+	 * 专业基础课
+	 */
+	private boolean isMajorRequired;
 
-	public int getId() {
-		return id;
+	/**
+	 * 专业选修课
+	 */
+	private boolean isMajorOption;
+
+	/**
+	 * 任意选修课
+	 */
+	private boolean isOptional;
+
+	/**
+	 * 课程学时
+	 */
+	private int courseHour;
+
+
+	public int getCourseId() {
+		return courseId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setCourseId(int courseId) {
+		this.courseId = courseId;
 	}
 
-	public String getName() {
-		return name;
+	public String getCourseName() {
+		return courseName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
 	}
 
 	public boolean isRequired() {
 		return isRequired;
 	}
 
-	public void setRequired(boolean isRequired) {
-		this.isRequired = isRequired;
+	public void setRequired(boolean required) {
+		isRequired = required;
 	}
 
 	public boolean isMajorRequired() {
 		return isMajorRequired;
 	}
 
-	public void setMajorRequired(boolean isMajorRequired) {
-		this.isMajorRequired = isMajorRequired;
+	public void setMajorRequired(boolean majorRequired) {
+		isMajorRequired = majorRequired;
+	}
+
+	public boolean isMajorOption() {
+		return isMajorOption;
+	}
+
+	public void setMajorOption(boolean majorOption) {
+		isMajorOption = majorOption;
 	}
 
 	public boolean isOptional() {
 		return isOptional;
 	}
 
-	public void setOptional(boolean isOptional) {
-		this.isOptional = isOptional;
-	}
-	
-	
-	@Override
-	public int compareTo(Course cour) {
-		return (this.id < cour.id ? -1 : (this.id == cour.id) ? 0 : 1);
+	public void setOptional(boolean optional) {
+		isOptional = optional;
 	}
 
+	public int getCourseHour() {
+		return courseHour;
+	}
+
+	public void setCourseHour(int courseHour) {
+		this.courseHour = courseHour;
+	}
+
+	@Override
+	public int compareTo(Course cour) {
+		return (this.courseId < cour.courseId ? -1 : (this.courseId == cour.courseId) ? 0 : 1);
+	}
+
+	@Override
+	public String toString() {
+		return "Course{" +
+				"courseId=" + courseId +
+				", courseName='" + courseName + '\'' +
+				'}';
+	}
 }

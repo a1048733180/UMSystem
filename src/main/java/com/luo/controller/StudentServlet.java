@@ -57,7 +57,7 @@ public class StudentServlet extends HttpServlet {
 		if (!(professionId == null || "".equals(professionId.trim()))) {
 			System.out.println("进入了判断方法");
 			Profession profession = new Profession();
-			profession.setId(Integer.valueOf(professionId));
+			profession.setProfessionId(Integer.valueOf(professionId));
 			student.setStudentProfession(profession);
 		}
 
@@ -90,7 +90,7 @@ public class StudentServlet extends HttpServlet {
 		stu.setStudentSex(sex);
 		stu.setStudentBirthday(birthday);
 		Profession temp = new Profession();
-		temp.setId(Integer.parseInt(professionId));
+		temp.setProfessionId(Integer.parseInt(professionId));
 		stu.setStudentProfession(temp);
 		stu.setStudentTel(tel);
 
@@ -122,7 +122,7 @@ public class StudentServlet extends HttpServlet {
 		stu.setStudentSex(sex);
 		stu.setStudentBirthday(birthday);
 		Profession temp = new Profession();
-		temp.setId(Integer.parseInt(professionId));
+		temp.setProfessionId(Integer.parseInt(professionId));
 		stu.setStudentProfession(temp);
 		stu.setStudentTel(tel);
 

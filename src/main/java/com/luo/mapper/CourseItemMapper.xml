@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.luo.dao.CourseItemDao">
+   <insert id="insertCourseItem" parameterType="com.luo.entity.CourseItem">
+       insert into u_course_teacher(profession_id,course_id,teacher_id)
+       values (#{professionId}, #{courseId},#{teacherId})
+   </insert>
+
+    <update id="alertCourseItem" parameterType="com.luo.entity.CourseItem">
+        update u_course_teacher set teacher_id = #{teacherId} where profession_id = #{professionId} and course_id = #{courseId}
+    </update>
+
+    <select id="selectProfessionAndCourse" parameterType="com.luo.entity.CourseItem" resultType="int">
+        select count(*) from u_course_teacher where profession_id = #{professionId} and course_id = #{courseId}
+    </select>
+
+    <delete id="deleteCourseItemByTeacherId" parameterType="int">
+        delete from u_course_teacher where teacher_id = #{teacherId}
+    </delete>
+</mapper>

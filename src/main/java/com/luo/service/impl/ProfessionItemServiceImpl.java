@@ -23,6 +23,6 @@ public class ProfessionItemServiceImpl implements ProfessionItemService {
 	@Override
 	public void findCoursesByProfessionId(ProfessionItem professionItem) {
 		// 通过peofessionItem中的专业id获取专业要上的课程
-		professionItemDao.findCourseListByProfessionId(professionItem.getProfessionId());
+		professionItemDao.findCourseByProfessionId(professionItem.getProfessionId());
 	}
 }

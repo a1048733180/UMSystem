@@ -36,13 +36,9 @@ public class ProfessionServlet extends HttpServlet {
 	}
 
 	public void professionList(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		System.out.println("进入了1方法");
-		// String profession = request.getParameter("profession");
+		System.out.println("进入了professionList方法");
 		String course =request.getParameter("course");
-		//Profession pro = new Profession();
-//		if (!(profession == null || "".equals(profession.trim()))) {
-//			pro.setName(profession);
-//		}
+
 		String result = professionService.getProfessionList(course);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().write(result);

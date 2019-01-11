@@ -95,6 +95,12 @@ public class CourseItem implements Comparable<CourseItem> {
 		return true;
 	}
 
-	
-	
+	@Override
+	public String toString() {
+		return "CourseItem{" +
+				"profession=" + profession +
+				", teacher=" + teacher +
+				", course=" + course +
+				'}';
+	}
 }

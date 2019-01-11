@@ -22,16 +22,16 @@ public class CourseItemServiceImpl implements CourseItemService {
         Profession profession = new Profession();
         Course course = new Course();
 
-        profession.setId(courseItem.getProfessionId());
-        course.setId(courseItem.getCourseId());
+        profession.setProfessionId(courseItem.getProfessionId());
+        course.setCourseId(courseItem.getCourseId());
 
-        courseItemDao.insertCourseItemByTeacher(course, courseItem.getTeacher(), profession);
+        courseItemDao.insertCourseItem(courseItem);
     }
 
     @Override
     public void alertCourseItem(CourseItem[] courseItem, int teacherId) {
 
-        courseItemDao.alertCourseItem(courseItem, teacherId);
+        courseItemDao.alertCourseItem(courseItem[0]);
     }
 
     @Override

@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import com.luo.entity.Teacher;
 
@@ -46,12 +47,12 @@ public class TeacherDaoImpl implements TeacherDao {
             while ((thisLine = in.readLine()) != null) {
                 Teacher teacher = new Teacher();
                 String[] str = thisLine.split("/");
-                teacher.setId(Integer.valueOf(str[0]));
-                teacher.setName(str[1]);
-                teacher.setSex(str[2]);
+                teacher.setTeacherId(Integer.valueOf(str[0]));
+                teacher.setTeacherName(str[1]);
+                teacher.setTeacherSex(str[2]);
                 teacher.setEntryYear(str[3]); // 这里日期设置成String,并没有设置成Data
                 teacher.setJobTitle(str[4]);
-                teacher.setCourseList(courseItemDao.findCourseItemByTeacherId(teacher.getId()));
+                teacher.setCourseList(courseItemDao.findCourseItemByTeacherId(teacher.getTeacherId()));
                 teacherList.insert(teacher);
             }
             in.close();
@@ -61,51 +62,50 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public void insertTeacher(Teacher teacher) {
+    public int insertTeacher(Teacher teacher) {
         // 新增教师信息
         teacherList.insert(teacher);
 
         writerContent(file, "添加学生");
-
         refresh();
+
+
+        return 0;
     }
 
     @Override
-    public void alertTeacher(Teacher teacher) {
+    public int alertTeacher(Teacher teacher) {
         // 修改老师信息
         // 规定教师id是不能更改的，所以要先找到原数教师集合中的特定教师，然后更改完把整个集合更新到本地
         Teacher teacherTemp = teacherList.find(teacher);
-        teacherTemp.setName(teacher.getName());
-        teacherTemp.setSex(teacher.getSex());
+        teacherTemp.setTeacherName(teacher.getTeacherName());
+        teacherTemp.setTeacherSex(teacher.getTeacherSex());
         teacherTemp.setEntryYear(teacher.getEntryYear());
         teacherTemp.setJobTitle(teacher.getJobTitle());
 
         writerContent(file, "修改教师");
         // 更新数据
         refresh();
+        return 0;
     }
 
     @Override
-    public void deleteTeacher(Teacher teacher) {
+    public int deleteTeacher(Teacher teacher) {
         // 先从教师排序表中删除
         teacherList.delete(teacher);
 
         writerContent(file, "删除教师");
         // 更新数据
         refresh();
+        return 0;
     }
 
-    @Override
-    public SortedCirDoublyList<Teacher> getTeacherList() {
-        // 返回教师排序链表
-        return this.teacherList;
-    }
 
     @Override
-    public SeqList<Teacher> getTeacherSeqList() {
+    public List<Teacher> getTeacher() {
         // 返回教师顺序表
         this.teacherSeqList = this.teacherList.traverse();
-        return this.teacherSeqList;
+        return null;
     }
 
     // 把教师排序表更新到本地
@@ -114,7 +114,7 @@ public class TeacherDaoImpl implements TeacherDao {
             BufferedWriter out = new BufferedWriter(new FileWriter(file));
             for (int i = 0; i < teacherList.size(); i++) {
                 Teacher tea = teacherList.get(i);
-                out.write(tea.getId() + "/" + tea.getName() + "/" + tea.getSex() + "/" + tea.getEntryYear() + "/"
+                out.write(tea.getTeacherId() + "/" + tea.getTeacherName() + "/" + tea.getTeacherSex() + "/" + tea.getEntryYear() + "/"
                         + tea.getJobTitle());
                 out.newLine();
             }

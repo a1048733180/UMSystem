@@ -10,15 +10,24 @@ import com.luo.entity.Teacher;
  *
  */
 public interface TeacherService {
-	
-	// 定义添加教师方法
-	void insertTeacher(Teacher teacher);
-	
-	// 定义修改教师方法
-	void alertTeacher(Teacher teacher);
+
+	/**
+	 * 增加教师信息
+	 * @param teacher
+	 * @return true：添加成功  false: 添加失败
+	 * @throws Exception
+	 */
+	boolean insertTeacher(Teacher teacher) throws Exception;
+
+	/**
+	 * 修改教师信息
+	 * @param teacher
+	 * @return true：修改成功  false: 修改失败
+	 */
+	boolean alertTeacher(Teacher teacher);
 	
 	// 定义删除教师方法
-	void deleteTeacher(Teacher teacher);
+	boolean deleteTeacher(Teacher teacher);
 	
 	// 分页获取教师列表
 	String getTeacherListByPage(Page page);

@@ -49,18 +49,18 @@ public class ProfessionItemDaoImpl implements ProfessionItemDao {
                 Profession profession = new Profession();
                 String[] professionStr = str[0].split("-");
 
-                profession.setId(Integer.parseInt(professionStr[0]));
-                profession.setName(professionStr[1]);
+                profession.setProfessionId(Integer.parseInt(professionStr[0]));
+                profession.setProfessionName(professionStr[1]);
 
                 String[] courseStr = str[1].split("-");
                 Course course = new Course();
-                course.setId(Integer.parseInt(courseStr[0]));
-                course.setName(courseStr[1]);
+                course.setCourseId(Integer.parseInt(courseStr[0]));
+                course.setCourseName(courseStr[1]);
 
                 professionItem.setProfession(profession);
-                professionItem.setProfessionId(profession.getId());
+                professionItem.setProfessionId(profession.getProfessionId());
                 professionItem.setCourse(course);
-                professionItem.setCourseId(course.getId());
+                professionItem.setCourseId(course.getCourseId());
 
                 professionItemSet.add(professionItem);
             }
@@ -73,7 +73,7 @@ public class ProfessionItemDaoImpl implements ProfessionItemDao {
 
     @Override
     // 通过专业id返回对应的课程，用于前端展示
-    public List<Course> findCourseListByProfessionId(int professionId) {
+    public List<Course> findCourseByProfessionId(int professionId) {
         // TODO Auto-generated method stub
         List<Course> courseList = new ArrayList<Course>();
         ProfessionItem professionItem = new ProfessionItem();
