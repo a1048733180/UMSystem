@@ -25,10 +25,18 @@ public interface TeacherService {
 	 * @return true：修改成功  false: 修改失败
 	 */
 	boolean alertTeacher(Teacher teacher)throws Exception;
-	
-	// 定义删除教师方法
+
+	/**
+	 * 定义删除教师方法
+	 * @param teacher
+	 * @return
+	 */
 	boolean deleteTeacher(Teacher teacher);
-	
-	// 分页获取教师列表
+
+	/**
+	 * 分页获取教师列表
+	 * @param page
+	 * @return
+	 */
 	String getTeacherListByPage(Page page);
 }

@@ -10,6 +10,10 @@ import com.luo.entity.User;
  */
 public interface UserService {
 
-	// 登陆检验
+	/**
+	 * 登陆检验
+	 * @param user
+	 * @return
+	 */
 	boolean getAdmin(User user);
 }

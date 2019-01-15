@@ -24,10 +24,17 @@ public interface ProfessionService {
      */
     boolean deleteProfession(Profession profession);
 
-    // 修改专业
+    /**
+     * 修改专业
+     * @param profession
+     */
     void alertProfession(Profession profession);
 
-    // 返回专业列表
+    /**
+     * 返回专业列表
+     * @param course
+     * @return
+     */
     String getProfessionList(String course);
 
 

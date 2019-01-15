@@ -9,19 +9,33 @@ import com.luo.entity.Student;
  *
  */
 public interface StudentService {
-	
-	// 定义添加学生方法
+
+	/**
+	 * 添加学生方法
+	 * @param student
+	 * @return
+	 */
 	int insertStudent(Student student);
-	
-	// 定义删除学生(根据Id)方法
+
+	/**
+	 * 删除学生(根据Id)方法
+	 * @param id
+	 */
 	void deleteStudent(long id);
-	
-	// 定义查询学生方法
-	Student selectStudentById(long id);
-	
-	// 定义修改学生方法
+
+
+	/**
+	 * 定义修改学生方法
+	 * @param student
+	 */
 	void alertStudent(Student student);
-	
-	// 分页获取学生
+
+	/**
+	 * 分页获取学生
+	 * @param student
+	 * @param page
+	 * @return
+	 */
 	 String getStudentListByPage(Student student, Page page);
+
 }

@@ -29,9 +29,6 @@ public class ProfessionServiceImpl implements ProfessionService {
         return sqlSession;
     }
 
-//    public ProfessionServiceImpl() {
-//        this.professionDao = new ProfessionDaoImpl();
-//    }
 
     @Override
     public void insertProfession(Profession profession) throws Exception {

@@ -1,7 +1,6 @@
 package com.luo.service.impl;
 
 import com.luo.dao.UserDao;
-import com.luo.dao.impl.UserDaoImpl;
 import com.luo.entity.User;
 import com.luo.service.UserService;
 import com.luo.util.MyBatisUtil;

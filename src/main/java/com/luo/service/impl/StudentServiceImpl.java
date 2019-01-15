@@ -1,10 +1,6 @@
 package com.luo.service.impl;
 
-import com.luo.base.list.SeqList;
-import com.luo.dao.ProfessionDao;
 import com.luo.dao.StudentDao;
-import com.luo.dao.StudentDao;
-import com.luo.dao.impl.ProfessionDaoImpl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,49 +102,4 @@ public class StudentServiceImpl implements StudentService {
         sqlSession.close();
         return message;
     }
-
-
-//	@Override
-//	public void insertStudent(Student student) {
-//		// 添加学生
-//		// 获取学生专业id
-//		int stuProfessionId = student.getProfessionId();
-//		// 从专业表中通过专业id获取学生专业
-//		ProfessionDao proDao = new ProfessionDaoImpl();
-//		student.setProfession(proDao.findProfession(stuProfessionId));
-//		stuDao.insertStudent(student);
-//
-//	}
-
-//	@Override
-//	public void deleteStudent(int id) {
-//		// 删除学生
-//		if (id == 0) {
-//			System.out.println("不存在id为0");
-//		} else {
-//			stuDao.deleteStudent(id);
-//		}
-//	}
-
-    @Override
-    public Student selectStudentById(long id) {
-        // 查询学生（根据id）
-        StudentDao studentDao = getSqlSession().getMapper(StudentDao.class);
-        Student student = studentDao.selectStudentById(id);
-        sqlSession.close();
-        return student;
-    }
-
-//	@Override
-//	public void alertStudent(Student student) {
-//		// 修改学生
-//		// 获取学生专业id
-//		int stuProfessionId = student.getProfessionId();
-//		// 从专业表中通过专业id获取学生专业
-//		ProfessionDao proDao = new ProfessionDaoImpl();
-//		student.setProfession(proDao.findProfession(stuProfessionId));
-//		stuDao.alertStudent(student);
-//
-//	}
-
 }

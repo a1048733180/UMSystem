@@ -3,8 +3,6 @@ package com.luo.service.impl;
 import com.luo.dao.CourseItemDao;
 import com.luo.dao.TeacherDao;
 
-import com.luo.dao.impl.TeacherDaoImpl;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,13 +24,6 @@ import org.apache.ibatis.session.SqlSession;
  * @author L99
  */
 public class TeacherServiceImpl implements TeacherService {
-
-    public TeacherDao teacherDao;
-
-    public TeacherServiceImpl() {
-        this.teacherDao = new TeacherDaoImpl();
-
-    }
 
     private SqlSession sqlSession;
 

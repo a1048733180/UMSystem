@@ -2,7 +2,6 @@ package com.luo.service.impl;
 
 import com.luo.dao.CourseDao;
 import com.luo.dao.ProfessionItemDao;
-import com.luo.dao.impl.CourseDaoImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,6 @@ import com.luo.entity.Course;
 import com.luo.entity.Profession;
 import com.luo.service.CourseService;
 
-import com.luo.service.ProfessionService;
 import com.luo.util.MyBatisUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
@@ -26,11 +24,6 @@ public class CourseServiceImpl implements CourseService {
         return sqlSession;
     }
 
-    CourseDao courseDao;
-
-    public CourseServiceImpl() {
-        this.courseDao = new CourseDaoImpl();
-    }
 
     @Override
     public boolean insertCourse(Course course) {

@@ -17,8 +17,12 @@ public interface CourseService {
 	 * @return
 	 */
 	boolean insertCourse(Course course);
-	
-	// 获取全部课程集合
+
+	/**
+	 * 获取全部课程集合
+	 * @param profession
+	 * @return
+	 */
 	String getCourseList(Profession profession);
 
 	/**
