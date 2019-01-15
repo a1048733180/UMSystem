@@ -18,4 +18,12 @@
     <delete id="deleteCourseItemByTeacherId" parameterType="int">
         delete from u_course_teacher where teacher_id = #{teacherId}
     </delete>
+
+    <delete id="deleteCourseItemByProfessionId" parameterType="int">
+        delete from u_course_teacher where profession_id = #{professionId}
+    </delete>
+
+    <delete id="deleteCourseItemByCourseId" parameterType="int">
+        delete from u_course_teacher where course_id = #{courseId}
+    </delete>
 </mapper>

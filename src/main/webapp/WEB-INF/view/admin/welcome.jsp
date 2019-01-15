@@ -16,10 +16,10 @@
   	<hr />
   	<h2>系统环境</h2>
   	<p>系统环境：Windows</p>
-	<p>开发工具：Eclipse</p>
+	<p>开发工具：IDEA</p>
 	<p>Java版本：JDK 1.8</p>
 	<p>服务器：tomcat 9.0</p>
-	<p>系统采用技术： Servlet+Jsp+EasyUI+jQuery+Ajax+面向接口编程</p>
+	<p>系统采用技术： Servlet+Jsp+MyBatis+EasyUI+jQuery+Ajax</p>
 </div>
 </body>
 </html>

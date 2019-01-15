@@ -43,7 +43,7 @@ public class SystemServlet extends HttpServlet{
 		// 清除账户信息
 		request.getSession().removeAttribute("user");
 		// 重定向跳转到首页
-		String contextPath = request.getContextPath();
+		String contextPath = "/";
 		response.sendRedirect(contextPath);
 	}
 }

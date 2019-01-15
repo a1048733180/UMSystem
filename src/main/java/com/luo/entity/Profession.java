@@ -1,55 +1,66 @@
 package com.luo.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 专业类
- * 
+ *
  * @author L99
- * 
+ *
  */
-public class Profession implements Comparable<Profession>{
-	private int professionId; // 专业Id
+public class Profession implements Comparable<Profession> {
 
-	private String professionName; // 专业名字
+    /**
+     * 专业Id
+     */
+    private int professionId;
 
-	private List<Course> courseList; // 专业要上的课程
+    /**
+     * 专业名字
+     */
+    private String professionName;
 
-	public int getProfessionId() {
-		return professionId;
-	}
+    /**
+     * 专业要上的课程
+     */
+    private List<Course> courseList;
 
-	public void setProfessionId(int professionId) {
-		this.professionId = professionId;
-	}
+    public int getProfessionId() {
+        return professionId;
+    }
 
-	public String getProfessionName() {
-		return professionName;
-	}
+    public void setProfessionId(int professionId) {
+        this.professionId = professionId;
+    }
 
-	public void setProfessionName(String professionName) {
-		this.professionName = professionName;
-	}
+    public String getProfessionName() {
+        return professionName;
+    }
 
-	public List<Course> getCourseList() {
-		return courseList;
-	}
+    public void setProfessionName(String professionName) {
+        this.professionName = professionName;
+    }
 
-	public void setCourseList(List<Course> courseList) {
-		this.courseList = courseList;
-	}
+    public List<Course> getCourseList() {
+        return courseList;
+    }
 
-	@Override
-	public String toString() {
-		return "Profession{" +
-				"professionId=" + professionId +
-				", professionName='" + professionName + '\'' +
-				'}';
-	}
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
+    }
 
-	@Override
-	public int compareTo(Profession pro) {
-		return (this.professionId < pro.professionId ? -1 : (this.professionId == pro.professionId) ? 0 : 1);
-	}
+    @Override
+    public String toString() {
+        return "Profession{" +
+                "professionId=" + professionId +
+                ", professionName='" + professionName + '\'' +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Profession pro) {
+        return (this.professionId < pro.professionId ? -1 : (this.professionId == pro.professionId) ? 0 : 1);
+    }
 
 }

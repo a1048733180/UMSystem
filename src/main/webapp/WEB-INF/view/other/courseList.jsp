@@ -21,17 +21,19 @@
 	        fit: true,//自动大小 
 	        method: "post",
 	        url:"CourseServlet?method=CourseList&t="+new Date().getTime(),
-	        idField:'id', 
+	        idField:'courseId',
 	        singleSelect: true,//是否单选 
 	        pagination: false,//分页控件 
 	        rownumbers: true,//行号 
-	        sortName:'id',
-	        sortOrder:'DESC', 
+	        sortName:'courseId',
+	        sortOrder:'asc',
 	        remoteSort: false,
 	        columns: [[  
 				{field:'chk',checkbox: true,width:50},
- 		        {field:'id',title:'ID',width:50, sortable: true},    
- 		        {field:'name',title:'课程名称',width:200},
+ 		        {field:'courseId',title:'ID',width:50, sortable: true},
+ 		        {field:'courseName',title:'课程名称',width:200},
+				{field:'courseNature',title:'课程性质',width:200},
+				{field:'courseHour',title:'课程学时',width:200}
 	 		]], 
 	        toolbar: "#toolbar"
 	    }); 
@@ -46,13 +48,13 @@
         	if(selectRow == null){
             	$.messager.alert("消息提醒", "请选择数据进行删除!", "warning");
             } else{
-            	var courseid = selectRow.id;
+            	var courseId = selectRow.courseId;
             	$.messager.confirm("消息提醒", "将删除与课程相关的所有数据，确认继续？", function(r){
             		if(r){
             			$.ajax({
 							type: "post",
 							url: "CourseServlet?method=DeleteCourse",
-							data: {courseid: courseid},
+							data: {courseId: courseId},
 							success: function(msg){
 								if(msg == "success"){
 									$.messager.alert("消息提醒","删除成功!","info");
@@ -72,8 +74,8 @@
 	  	//设置添加窗口
 	    $("#addDialog").dialog({
 	    	title: "添加课程",
-	    	width: 450,
-	    	height: 250,
+	    	width: 440,
+	    	height: 380,
 	    	iconCls: "icon-add",
 	    	modal: true,
 	    	collapsible: false,
@@ -102,7 +104,10 @@
 										//关闭窗口
 										$("#addDialog").dialog("close");
 										//清空原表格数据
-										$("#add_name").textbox('setValue', "");
+										$("#add_courseId").textbox('setValue',"");
+										$("#add_courseName").textbox('setValue', "");
+                                        $("#add_courseNature").textbox('setValue',"");
+                                        $("#add_courseHour").textbox('setValue',"");
 										//刷新
 										$('#dataList').datagrid("reload");
 									} else{
@@ -119,10 +124,19 @@
 					plain: true,
 					iconCls:'icon-book-reset',
 					handler:function(){
-						$("#add_name").textbox('setValue', "");
+                        $("#add_courseId").textbox('setValue',"");
+                        $("#add_courseName").textbox('setValue', "");
+                        $("#add_courseNature").textbox('setValue',"");
+                        $("#add_courseHour").textbox('setValue',"");
 					}
 				},
-			]
+			],
+            onClose: function () {
+                $("#add_courseId").textbox('setValue',"");
+                $("#add_courseName").textbox('setValue', "");
+                $("#add_courseNature").textbox('setValue',"");
+                $("#add_courseHour").textbox('setValue',"");
+            }
 	    });
 	  	
 	});
@@ -144,10 +158,29 @@
 	<div id="addDialog" style="padding: 10px">  
     	<form id="addForm" method="post">
 	    	<table cellpadding="8" >
+				<tr>
+					<td>ID:</td>
+					<td><input id="add_courseId" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="courseId" data-options="required:true, missingMessage:'请输入课程号'" />
+				</tr>
 	    		<tr>
 	    			<td>课程名称:</td>
-	    			<td><input id="add_name" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="name" data-options="required:true, validType:'repeat_course', missingMessage:'不能为空'" /></td>
+	    			<td><input id="add_courseName" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="courseName" data-options="required:true, missingMessage:'不能为空'" /></td>
 	    		</tr>
+				<tr>
+					<td>课程类型:</td>
+					<td colspan="4"><select id="add_courseNature" class="easyui-combobox"
+											data-options="editable: false,  panelHeight: 100, width: 80, height: 30"
+											name="courseNature">
+						<option value="任意选修">任意选修</option>
+						<option value="公共基础">公共基础</option>
+						<option value="专业基础">专业基础</option>
+						<option value="专业选修">专业选修</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>课程学时:</td>
+					<td><input id="add_courseHour" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="courseHour" /></td>
+				</tr>
 	    	</table>
 	    </form>
 	</div>

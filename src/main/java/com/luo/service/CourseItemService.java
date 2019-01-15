@@ -17,4 +17,12 @@ public interface CourseItemService {
 	
 	// 删除课程教师专业对应对象
 	void deleteCourseItem(int teacherId);
+
+	/**
+	 * 通过课程id删除对应的教师任课信息 <-（课程的删除功能）
+	 * 非严格删除，无法得知是否删除成功
+	 * （可以通过先查询数据库中得出符合条件的数量 再与删除受影响的行数比较是否相等来判断）
+	 * @param courseId
+	 */
+	void deleteCourseItemByCourseId(int courseId);
 }

@@ -4,6 +4,6 @@
 <mapper namespace="com.luo.dao.UserDao">
     <select id="getAdmin" parameterType="com.luo.entity.User"
             resultType="int">
-        select count(*) from u_user where username = #{account} and password = #{password}
+        select count(*) from u_user where username = #{userName} and password = #{password}
     </select>
 </mapper>

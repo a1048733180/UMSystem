@@ -52,7 +52,7 @@ $.extend($.fn.validatebox.defaults.rules, {
 	//验证课程不能重复
 	repeat_course: {
 		validator: function (value) {
-			var flag = true;
+			var flag = false;
 			$.ajax({
 				type: "post",
 				async: false,
@@ -60,7 +60,7 @@ $.extend($.fn.validatebox.defaults.rules, {
 				success: function(data){//在验证函数里加载数据，加载过来后判断输入的值
 					var course = $.parseJSON(data);
 		            for(var i=0;i < course.length;i++){
-		            	if(value == course[i].name){
+		            	if(value == course[i].courseName){
 		            		flag = false;
 		            		break;
 		            	}
@@ -72,18 +72,18 @@ $.extend($.fn.validatebox.defaults.rules, {
 	    message: '课程名称已存在'
 	},
 	
-	//验证年级不能重复
-	repeat_grade: {
+	//验证专业不能重复
+	repeat_profession: {
 		validator: function (value) {
 			var flag = true;
 			$.ajax({
 				type: "post",
 				async: false,
-				url: "GradeServlet?method=GradeList&t="+new Date().getTime(),
+				url: "ProfessionServlet?method=ProfessionList&t="+new Date().getTime(),
 				success: function(data){//在验证函数里加载数据，加载过来后判断输入的值
-					var grade = $.parseJSON(data);
-		            for(var i=0;i < grade.length;i++){
-		            	if(value == grade[i].name){
+					var profession = $.parseJSON(data);
+		            for(var i=0;i < profession.length;i++){
+		            	if(value == profession[i].professionName){
 		            		flag = false;
 		            		break;
 		            	}
@@ -92,7 +92,7 @@ $.extend($.fn.validatebox.defaults.rules, {
 			});
 			return flag;
 	    },
-	    message: '年级名称已存在'
+	    message: '该专业已存在'
 	},
 	
 	//验证班级不能重复

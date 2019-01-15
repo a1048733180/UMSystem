@@ -13,12 +13,20 @@ import java.util.List;
  *
  */
 public interface CourseDao {
-	
-	// 增加课程
-	void insertCourse(Course course);
 
-	// 删除课程
-	void deleteCourse(Course course);
+	/**
+	 * 增加课程
+	 * @param course
+	 * @return 受影响的行数
+	 */
+	int insertCourse(Course course);
+
+	/**
+	 * 通过课程id删除课程
+	 * @param courseId
+	 * @return 受影响的行数
+	 */
+	int deleteCourse(int courseId);
 
 	// 修改课程
 	void alertCourse(Course course);

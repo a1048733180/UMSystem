@@ -45,7 +45,7 @@ public class UserDaoImpl implements UserDao {
                 String[] str = thisLine.split("/");
                 User user = new User();
                 user.setId(Integer.valueOf(str[0]));
-                user.setAccount(str[1]);
+                user.setUserName(str[1]);
                 user.setPassword(str[2]);
                 user.setName(str[3]);
                 user.setType(type);
@@ -72,7 +72,7 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
-    public boolean getAdmin(User user) {
+    public int getAdmin(User user) {
         String resource = "conf.xml";
         try {
             InputStream inputStream = Resources.getResourceAsStream(resource);
@@ -82,11 +82,11 @@ public class UserDaoImpl implements UserDao {
             int exist = session.selectOne(statement, user);
             session.close();
             if(exist == 0){
-                return false;
+                return 0;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return true;
+        return 0;
     }
 }

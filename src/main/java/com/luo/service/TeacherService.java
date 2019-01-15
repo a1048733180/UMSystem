@@ -24,7 +24,7 @@ public interface TeacherService {
 	 * @param teacher
 	 * @return true：修改成功  false: 修改失败
 	 */
-	boolean alertTeacher(Teacher teacher);
+	boolean alertTeacher(Teacher teacher)throws Exception;
 	
 	// 定义删除教师方法
 	boolean deleteTeacher(Teacher teacher);

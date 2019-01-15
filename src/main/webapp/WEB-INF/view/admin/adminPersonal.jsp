@@ -204,7 +204,7 @@
 	    		<tr>
 	    			<td>新密码:</td>
 	    			<td>
-	    				<input  type="hidden" name="account" value="${user.account }" />
+	    				<input  type="hidden" name="userName" value="${user.userName }" />
 	    				<input id="new_password" style="width: 200px; height: 30px;" class="easyui-textbox" type="password" validType="password" name="password" data-options="required:true, missingMessage:'请输入新密码'" />
 	    			</td>
 	    		</tr>

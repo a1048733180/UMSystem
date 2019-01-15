@@ -110,7 +110,7 @@ public class CourseItemDaoImpl implements CourseItemDao {
         // 新增课程类
         // 要写入稀疏三元数组链表中，也要写入本地文件中
         // 判断新增课程是专业必修课还是必修课
-        if (course.isRequired()) {
+        if (true) {
             // 如果是必须课，那么每个专业都要上
             for (int i = 0; i < new ProfessionDaoImpl().professionCount(); i++) {
                 Triple tri = new Triple(new ProfessionDaoImpl().professionList.get(i).getProfessionId(), course.getCourseId(),
@@ -309,5 +309,15 @@ public class CourseItemDaoImpl implements CourseItemDao {
     // 更新数据，重新从本地读取数据
     private void refresh() {
         readContent(file);
+    }
+
+    @Override
+    public void deleteCourseItemByProfessionId(int professionId) {
+
+    }
+
+    @Override
+    public void deleteCourseItemByCourseId(int courseId) {
+
     }
 }

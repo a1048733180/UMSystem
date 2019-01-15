@@ -47,17 +47,6 @@ public class CourseDaoImpl implements CourseDao {
                 course.setCourseId(Integer.valueOf(str[0]));
                 course.setCourseName(str[1]);
 
-                switch (str[2]) {
-                    case "1":
-                        course.setRequired(true);
-                        break;
-                    case "2":
-                        course.setMajorRequired(true);
-                        break;
-                    case "3":
-                        course.setOptional(true);
-                        break;
-                }
                 courseList.insert(course);
             }
             in.close();
@@ -72,21 +61,23 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public void insertCourse(Course course) {
+    public int insertCourse(Course course) {
         // 新增课程
         // 从课程表排序表中添加后更新到本地文件
         courseList.insert(course);
 
         writerContent(file, "增加课程");
+        return 0;
     }
 
     @Override
-    public void deleteCourse(Course course) {
+    public int deleteCourse(int courseId) {
         // 删除课程
         // 从课程表排序表中删除后更新到本地文件
-        courseList.delete(course);
+
 
         writerContent(file, "删除课程");
+        return 0;
 
     }
 
@@ -97,10 +88,6 @@ public class CourseDaoImpl implements CourseDao {
         // 根据id寻找课程表中特定id的课程，寻找是根据comparaTo方法比较id
         Course courseTemp = courseList.find(course);
 
-        courseTemp.setCourseName(course.getCourseName());
-        courseTemp.setRequired(course.isRequired());
-        courseTemp.setMajorRequired(course.isMajorRequired());
-        courseTemp.setOptional(course.isOptional());
 
         writerContent(file, "修改课程");
     }
@@ -113,9 +100,7 @@ public class CourseDaoImpl implements CourseDao {
 
         for (int j = 0; j < courseSeqList.size(); j++) {
             Course courseTemp = courseSeqList.get(j);
-            if (courseTemp.isRequired() || courseTemp.isMajorRequired()) {
-                majorCourseCount++;
-            }
+
         }
         return majorCourseCount;
     }
@@ -142,13 +127,7 @@ public class CourseDaoImpl implements CourseDao {
             for (int i = 0; i < courseList.size(); i++) {
                 Course courseTemp = courseList.get(i);
                 String str = "";
-                if (courseTemp.isRequired()) {
-                    str += "1";
-                } else if (courseTemp.isMajorRequired()) {
-                    str += "2";
-                } else {
-                    str += "3";
-                }
+
                 out.write(courseTemp.getCourseId() + "/" + courseTemp.getCourseName() + "/" + str);
                 out.newLine();
             }

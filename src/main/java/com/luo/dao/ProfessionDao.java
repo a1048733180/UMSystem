@@ -13,21 +13,37 @@ import java.util.List;
  */
 public interface ProfessionDao {
 
-	//新增专业
-	void insertProfession(Profession profession);
+	/**
+	 * 新增专业
+	 * @param profession
+	 */
+	int insertProfession(Profession profession);
 	
 	//修改专业
 	void alertProfessioin(Profession profession);
-	
-	// 删除专业
-	void deleteProfession(Profession profession);
+
+	/**
+	 * 删除专业
+	 * @param professionId
+	 * @return 受影响的行数
+	 */
+	int deleteProfession(int professionId);
 	
 	// 记录专业数量
 	int professionCount();
-	
-	// 返回专业列表
+
+	/**
+	 * 获取专业信息
+	 * @return
+	 */
 	List<Profession> getProfession();
 	
 	// 通过专业id查找专业
 	Profession findProfession(int professionId);
+
+	/**
+	 * 获取专业、课程信息
+	 * @return
+	 */
+	List<Profession> getProfessionItem();
 }

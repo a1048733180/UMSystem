@@ -25,7 +25,10 @@ public class User {
 
 	private int id; // ID
 
-	private String account; // 用户名
+	/**
+	 * 用户名
+	 */
+	private String userName;
 
 	private String password = "111111"; // 密码：默认'111111'
 
@@ -41,12 +44,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getAccount() {
-		return account;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setAccount(String account) {
-		this.account = account;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPassword() {
@@ -77,7 +80,7 @@ public class User {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((account == null) ? 0 : account.hashCode());
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		return result;
 	}
@@ -91,10 +94,10 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (account == null) {
-			if (other.account != null)
+		if (userName == null) {
+			if (other.userName != null)
 				return false;
-		} else if (!account.equals(other.account))
+		} else if (!userName.equals(other.userName))
 			return false;
 		if (password == null) {
 			if (other.password != null)

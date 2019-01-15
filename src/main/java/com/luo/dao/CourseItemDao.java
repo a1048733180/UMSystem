@@ -57,4 +57,16 @@ public interface CourseItemDao {
 	 * @return 1：成功  0：失败
 	 */
 	int selectProfessionAndCourse(CourseItem courseItem);
+
+	/**
+	 * 通过专业id删除对应的任课信息
+	 * @param professionId
+	 */
+	void deleteCourseItemByProfessionId(int professionId);
+
+	/**
+	 * 通过课程id删除对应的任课信息
+	 * @param courseId
+	 */
+	void deleteCourseItemByCourseId(int courseId);
 }

@@ -5,4 +5,41 @@
     <select id="findCourseByProfessionId" parameterType="int" resultType="com.luo.entity.Course">
         select a.course_id courseId,course_name courseName,course_hour courseHour from u_profession_course a,u_course b where a.course_id = b.course_id and a.profession_id = #{id}
     </select>
+
+    <insert id="insertCourseForProfession" parameterType="com.luo.entity.ProfessionItem">
+        insert into u_profession_course(profession_id,course_id) values (#{professionId},#{courseId})
+    </insert>
+
+
+    <select id="getProfessionItem" resultMap="professionItemList">
+        SELECT
+        a.profession_id,
+        a.profession_name,
+        b.course_id,
+        c.course_name
+        FROM
+        u_profession a
+        LEFT JOIN u_profession_course b
+        ON a.profession_id = b.profession_id
+        LEFT JOIN u_course c
+        ON c.course_id = b.course_id
+    </select>
+
+    <resultMap id="professionItemList" type="com.luo.entity.Profession">
+        <id property="professionId" column="profession_id"/>
+        <result property="professionName" column="profession_name" />
+        <collection property="courseList" ofType="com.luo.entity.Course">
+            <id property="courseId" column="course_id" />
+            <result property="courseName" column="course_name" />
+        </collection>
+
+    </resultMap>
+
+    <delete id="deleteProfessionItemByProfessionId" parameterType="int">
+        delete from u_profession_course where profession_id = #{professionId}
+    </delete>
+
+    <delete id="deleteProfessionItemByCourseId" parameterType="int">
+        delete from u_profession_course where course_id = #{courseId}
+    </delete>
 </mapper>

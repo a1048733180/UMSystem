@@ -19,7 +19,7 @@ import com.luo.entity.ProfessionItem;
 /**
  * 专业对应课程管理实现类
  *
- * @author 10487
+ * @author L99
  *
  */
 public class ProfessionItemDaoImpl implements ProfessionItemDao {
@@ -83,5 +83,25 @@ public class ProfessionItemDaoImpl implements ProfessionItemDao {
             courseList.add(professionItemList.get(i).getCourse());
         }
         return courseList;
+    }
+
+    @Override
+    public void insertCourseForProfession(ProfessionItem professionItem) {
+
+    }
+
+    @Override
+    public List<Profession> getProfessionItem() {
+        return null;
+    }
+
+    @Override
+    public void deleteProfessionItemByProfessionId(int professionId) {
+
+    }
+
+    @Override
+    public void deleteProfessionItemByCourseId(int courseId) {
+
     }
 }

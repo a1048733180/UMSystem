@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>学生成绩管理系统 管理员后台</title>
+    <title>高校信息管理系统 管理员后台</title>
     <link rel="shortcut icon" href="favicon.ico"/>
 	<link rel="bookmark" href="favicon.ico"/>
     <link rel="stylesheet" type="text/css" href="easyui/css/default.css" />
@@ -51,8 +51,8 @@
     <div region="north" split="true" border="false" style="overflow: hidden; height: 30px;
         background: url(images/layout-browser-hd-bg.gif) #7f99be repeat-x center 50%;
         line-height: 20px;color: #fff; font-family: Verdana, 微软雅黑,黑体">
-        <span style="float:right; padding-right:20px;" class="head"><span style="color:red; font-weight:bold;">${user.name}&nbsp;</span>您好&nbsp;&nbsp;&nbsp;<a href="SystemServlet?method=LoginOut" id="loginOut">安全退出</a></span>
-        <span style="padding-left:10px; font-size: 16px; ">学生信息管理系统</span>
+        <span style="float:right; padding-right:20px;" class="head"><span style="color:red; font-weight:bold;">${user.userName}&nbsp;</span>您好&nbsp;&nbsp;&nbsp;<a href="SystemServlet?method=LoginOut" id="loginOut">安全退出</a></span>
+        <span style="padding-left:10px; font-size: 16px; ">高校信息管理系统</span>
     </div>
     <div region="west" hide="true" split="true" title="导航菜单" style="width:180px;" id="west">
 	<div id="nav" class="easyui-accordion" fit="true" border="false">

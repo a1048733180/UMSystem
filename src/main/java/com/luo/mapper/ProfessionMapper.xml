@@ -10,4 +10,35 @@
         <id property="professionId" column="profession_id"/>
         <result property="professionName" column="profession_name" />
     </resultMap>
+
+    <insert id="insertProfession" parameterType="com.luo.entity.Profession">
+        insert into u_profession(profession_id,profession_name) VALUES (#{professionId},#{professionName})
+    </insert>
+
+    <select id="getProfessionItem" resultMap="professionItemList">
+        SELECT
+  a.profession_id,
+  a.profession_name,
+  b.course_id,
+  c.course_name
+FROM
+  u_profession a
+  LEFT JOIN u_profession_course b
+    ON a.profession_id = b.profession_id
+  LEFT JOIN u_course c
+    ON c.course_id = b.course_id
+    </select>
+
+    <resultMap id="professionItemList" type="com.luo.entity.Profession">
+        <id property="professionId" column="profession_id"/>
+        <result property="professionName" column="profession_name" />
+        <association property="courseList" javaType="com.luo.entity.Course">
+            <id property="courseId" column="course_id" />
+            <result property="courseName" column="course_name" />
+        </association>
+    </resultMap>
+
+    <delete id="deleteProfession" parameterType="int">
+        delete from u_profession where profession_id = #{professionId}
+    </delete>
 </mapper>

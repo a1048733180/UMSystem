@@ -3,7 +3,16 @@
 
 <mapper namespace="com.luo.dao.CourseDao">
     <select id="getCourse" resultType="com.luo.entity.Course">
-        select course_id courseId,course_name courseName,course_hour courseHour from u_course
+        select course_id courseId,course_name courseName,course_nature courseNature,course_hour courseHour from u_course
     </select>
 
+
+    <insert id="insertCourse" parameterType="com.luo.entity.Course">
+        insert into u_course(course_id,course_name,course_nature,course_hour)
+        values(#{courseId},#{courseName},#{courseNature},#{courseHour})
+    </insert>
+
+    <delete id="deleteCourse" parameterType="int">
+        delete from u_course where course_id = #{courseId}
+    </delete>
 </mapper>

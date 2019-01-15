@@ -57,7 +57,7 @@ public class ProfessionDaoImpl implements ProfessionDao {
     }
 
     @Override
-    public void insertProfession(Profession profession) {
+    public int insertProfession(Profession profession) {
         // 新增专业
         // 因为这里是添加到本地文件后面，所以不执行writeContent方法
         try {
@@ -72,15 +72,17 @@ public class ProfessionDaoImpl implements ProfessionDao {
         } finally {
             writerContent(file, "添加后更新到本地出现错误");
         }
+        return 0;
     }
 
     @Override
-    public void deleteProfession(Profession profession) {
+    public int deleteProfession(int professionId) {
         // 删除专业
-        professionList.delete(profession);
+
         String errorMessage = "删除专业失败";
         writerContent(file, errorMessage);
 
+        return 0;
     }
 
     @Override
@@ -121,5 +123,10 @@ public class ProfessionDaoImpl implements ProfessionDao {
         Profession pro = new Profession();
         pro.setProfessionId(professionId);
         return this.professionList.find(pro) == null ? null : this.professionList.find(pro);
+    }
+
+    @Override
+    public List<Profession> getProfessionItem() {
+        return null;
     }
 }

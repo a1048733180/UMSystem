@@ -33,7 +33,7 @@
 		
 		//登录
 		$("#submitBtn").click(function(){
-			if($("input[name='account']").val() == "" || $("input[name='password']").val() == ""){
+			if($("input[name='userName']").val() == "" || $("input[name='password']").val() == ""){
 				$.messager.alert("消息提醒", "用户名或密码不能为空！", "warning");
 				return;
 			}
@@ -86,7 +86,7 @@
 <body>
 
 <div class="header" style="padding: 0;">
-	<h2 style="color: white; width: 400px; height: 60px; line-height: 60px; margin: 0 0 0 30px; padding: 0;">学生成绩管理系统</h2>
+	<h2 style="color: white; width: 400px; height: 60px; line-height: 60px; margin: 0 0 0 30px; padding: 0;">高校信息管理系统</h2>
 </div>
 <div class="loginWraper">
   <div id="loginform" class="loginBox">
@@ -94,7 +94,7 @@
       <div class="row cl">
         <label class="form-label col-3"><i class="Hui-iconfont">&#xe60d;</i></label>
         <div class="formControls col-8">
-          <input id="" name="account" type="text" placeholder="账户" class="input-text size-L">
+          <input id="" name="userName" type="text" placeholder="账户" class="input-text size-L">
         </div>
       </div>
       <div class="row cl">

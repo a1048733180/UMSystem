@@ -10,6 +10,10 @@ import com.luo.entity.User;
  */
 public interface UserDao {
 
-	// 判断用户是否在文件中存在
-	boolean getAdmin(User user);
+	/**
+	 * 判断管理员用户密码
+	 * @param user
+	 * @return 受影响的行数
+	 */
+	int getAdmin(User user);
 }
